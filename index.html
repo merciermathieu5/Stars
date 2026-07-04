@@ -8,11 +8,11 @@
   @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
   :root{
-    --teal:#006847; --teal-dark:#00402b; --teal-deep:#001a11; --teal-bright:#009966;
-    --orange:#85714D; --orange-bright:#C2A976;
-    --ink:#070b0c; --panel:#0d1517; --panel2:#122023; --line:#1e3438;
-    --txt:#e8f1f2; --txt-dim:#93aeb2; --txt-faint:#5f7a7e;
-    --ok:#3ecf8e; --warn:#f2c14e; --bad:#e05252; --memo:#85714D;
+    --teal:#006847; --teal-dark:#00432e; --teal-deep:#01271c; --teal-bright:#1cae76;
+    --orange:#EA7200; --orange-bright:#ff8c1a;
+    --ink:#070c0a; --panel:#0d1712; --panel2:#122318; --line:#1e3a2b;
+    --txt:#e8f2ed; --txt-dim:#93b2a3; --txt-faint:#5f7e70;
+    --ok:#3ecf8e; --warn:#f2c14e; --bad:#e05252; --memo:#EA7200;
     --font-display:'Bebas Neue', 'Oswald', sans-serif;
     --font-body:'Oswald', sans-serif;
     --font-data:'JetBrains Mono', monospace;
@@ -131,7 +131,7 @@
   .barre{position:relative; height:12px; background:var(--teal-deep); border-radius:2px; overflow:visible;}
   .barre .rempli{position:absolute; left:0; top:0; bottom:0; background:var(--teal); border-radius:2px 0 0 2px; transition:width .5s;}
   .barre .rempli.memo{background:linear-gradient(90deg, var(--teal), var(--orange));}
-  .barre .seuil{position:absolute; top:-3px; bottom:-3px; width:2px; background:var(--orange-bright); box-shadow:0 0 4px rgba(194,169,118,.8);}
+  .barre .seuil{position:absolute; top:-3px; bottom:-3px; width:2px; background:var(--orange-bright); box-shadow:0 0 4px rgba(234,114,0,.8);}
   .badge-etat{font-family:var(--font-body); font-size:.6rem; font-weight:700; letter-spacing:1px; text-transform:uppercase;
     padding:2px 8px; border-radius:2px; white-space:nowrap; vertical-align:middle;}
   .badge-etat.memorable{background:linear-gradient(90deg, var(--teal), var(--orange)); color:#fff;}
@@ -143,7 +143,7 @@
   .badge-etat.sousmemo{background:transparent; border:1px solid var(--orange); color:var(--orange-bright);}
   .badge-etat.indef{background:transparent; border:1px solid var(--txt-faint); color:var(--txt-faint);}
   .barre .jalon{position:absolute; top:-2px; bottom:-2px; width:1px; background:var(--txt-faint); opacity:.55;}
-  .barre .jalon.memo{width:2px; background:var(--orange-bright); opacity:1; box-shadow:0 0 4px rgba(194,169,118,.8);}
+  .barre .jalon.memo{width:2px; background:var(--orange-bright); opacity:1; box-shadow:0 0 4px rgba(234,114,0,.8);}
   .jc-mods{font-size:.68rem; color:var(--teal-bright); padding:6px 16px 0; font-family:var(--font-data);}
   .jc-mods b{color:var(--orange-bright); font-weight:700;}
   .att-input{width:64px; background:var(--teal-deep); border:1px solid var(--line); color:var(--txt);
@@ -328,10 +328,10 @@ const CONFIG = {
 };
 
 const CLES_LS = {
-  matrices: 'dal_matrices_v1',
-  overrides: 'dal_attentes_joueurs_v1',
-  proxy: 'dal_proxy_prefere_v1',
-  cache: 'dal_cache_v1'
+  matrices: 'sjs_matrices_v1',
+  overrides: 'sjs_attentes_joueurs_v1',
+  proxy: 'sjs_proxy_prefere_v1',
+  cache: 'sjs_cache_v1'
 };
 
 /* ------------------ DÉFINITION DES STATS ------------------ */
@@ -924,37 +924,61 @@ function seuilsMatrice(matCle, statCle, ov){
 }
 
 /* ------------------ DONNÉES DE SECOURS ------------------
-   Alignement DALLAS tel que publié sur ushl.ca */
-const DATE_SECOURS = '3 juillet 2026';
-const SECOURS_ROSTER = [];
+   Alignement DALLAS (pro) tel que publié sur ushl.ca (dernière mise à jour :
+   jeudi 25 juin 2026). Sert de base hors-ligne et de fixture de tests. */
+const DATE_SECOURS = '25 juin 2026';
+const SECOURS_ROSTER = [
+ {nom:'Julian Lutz',            po:'C', hd:'G', it:72,sp:71,st:80,en:77,du:80,di:68,sk:73,pa:72,pc:69,df:62,sc:73,ex:45,ld:41,ov:76,age:21,salaire:800000, ct:2},
+ {nom:'Curtis Lazar',           po:'C', hd:'D', it:93,sp:78,st:88,en:88,du:99,di:80,sk:73,pa:70,pc:67,df:57,sc:82,ex:77,ld:85,ov:81,age:30,salaire:7250000,ct:1},
+ {nom:'Kirby Dach',             po:'C', hd:'D', it:67,sp:83,st:82,en:86,du:83,di:75,sk:87,pa:80,pc:76,df:61,sc:78,ex:52,ld:41,ov:81,age:24,salaire:5500000,ct:1},
+ {nom:'Danila Yurov',           po:'AG',hd:'G', it:61,sp:77,st:70,en:76,du:75,di:71,sk:79,pa:78,pc:78,df:61,sc:78,ex:47,ld:42,ov:77,age:22,salaire:1500000,ct:2},
+ {nom:'Jakub Vrana',            po:'AG',hd:'G', it:58,sp:88,st:69,en:93,du:87,di:79,sk:90,pa:78,pc:76,df:67,sc:81,ex:71,ld:64,ov:82,age:29,salaire:6000000,ct:2},
+ {nom:'Evgeny Dadonov',         po:'AG',hd:'G', it:62,sp:76,st:67,en:75,du:76,di:80,sk:81,pa:76,pc:75,df:61,sc:78,ex:75,ld:65,ov:78,age:36,salaire:851000, ct:1},
+ {nom:'Tyler Boucher',          po:'AG',hd:'D', it:81,sp:71,st:83,en:79,du:83,di:63,sk:76,pa:71,pc:71,df:64,sc:76,ex:51,ld:42,ov:78,age:22,salaire:900000, ct:1},
+ {nom:'Vitali Abramov',         po:'AD',hd:'G', it:59,sp:85,st:69,en:92,du:86,di:87,sk:81,pa:77,pc:80,df:50,sc:89,ex:71,ld:57,ov:81,age:27,salaire:6000000,ct:1},
+ {nom:'Vasily Podkolzin',       po:'AD',hd:'G', it:67,sp:83,st:74,en:82,du:82,di:73,sk:83,pa:81,pc:79,df:58,sc:82,ex:59,ld:49,ov:81,age:24,salaire:6750000,ct:1},
+ {nom:'Bryan Rust',             po:'AD',hd:'D', it:72,sp:79,st:72,en:75,du:72,di:78,sk:78,pa:76,pc:75,df:65,sc:79,ex:75,ld:73,ov:79,age:33,salaire:1900000,ct:1},
+ {nom:'Daniel Sprong',          po:'AD',hd:'D', it:65,sp:79,st:77,en:75,du:74,di:80,sk:78,pa:76,pc:76,df:65,sc:76,ex:63,ld:52,ov:79,age:28,salaire:1125000,ct:1},
+ {nom:'Patrick Laine',          po:'AD',hd:'D', it:65,sp:81,st:78,en:92,du:93,di:85,sk:82,pa:75,pc:78,df:63,sc:88,ex:65,ld:48,ov:82,age:27,salaire:7250000,ct:1},
+ {nom:'Tobias Bjornfot',        po:'D', hd:'G', it:74,sp:77,st:84,en:88,du:84,di:84,sk:77,pa:68,pc:77,df:82,sc:58,ex:58,ld:47,ov:81,age:24,salaire:3000000,ct:1},
+ {nom:'Quinn Hughes',           po:'D', hd:'G', it:65,sp:83,st:70,en:88,du:83,di:79,sk:86,pa:85,pc:84,df:72,sc:72,ex:73,ld:76,ov:84,age:26,salaire:9750000,ct:2},
+ {nom:'Rasmus Andersson',       po:'D', hd:'D', it:73,sp:74,st:76,en:84,du:81,di:78,sk:75,pa:76,pc:71,df:74,sc:67,ex:73,ld:60,ov:79,age:29,salaire:3500000,ct:1},
+ {nom:'Simon Benoit',           po:'D', hd:'G', it:82,sp:74,st:83,en:78,du:80,di:69,sk:76,pa:56,pc:58,df:79,sc:54,ex:67,ld:65,ov:77,age:26,salaire:800025, ct:1},
+ {nom:'Helge Grans',            po:'D', hd:'D', it:80,sp:70,st:84,en:76,du:74,di:75,sk:71,pa:69,pc:70,df:79,sc:60,ex:52,ld:49,ov:79,age:23,salaire:2250000,ct:2},
+ {nom:'Michael Vukojevic',      po:'D', hd:'G', it:78,sp:65,st:90,en:82,du:87,di:67,sk:78,pa:63,pc:64,df:79,sc:56,ex:60,ld:45,ov:78,age:24,salaire:1500000,ct:1},
+ {nom:'Vladislav Kolyachonok',  po:'D', hd:'G', it:61,sp:80,st:73,en:72,du:73,di:71,sk:78,pa:74,pc:71,df:69,sc:73,ex:54,ld:39,ov:77,age:24,salaire:1500000,ct:1},
+ {nom:'Oliver Ekman-Larsson',   po:'D', hd:'G', it:68,sp:80,st:70,en:80,du:78,di:74,sk:79,pa:76,pc:76,df:73,sc:62,ex:95,ld:75,ov:78,age:34,salaire:1510000,ct:2},
+ {nom:'Justin G. Holl',         po:'D', hd:'D', it:78,sp:66,st:85,en:79,du:72,di:74,sk:69,pa:73,pc:68,df:78,sc:57,ex:68,ld:65,ov:78,age:33,salaire:1025000,ct:1},
+ {nom:'Arturs Silovs',          po:'G', hd:'G', it:76,sp:83,st:89,en:84,du:81,di:78,sk:80,pa:64,pc:78,df:null,sc:null,ex:63,ld:54,ov:76,age:24,salaire:700000, ct:1},
+ {nom:'Casey DeSmith',          po:'G', hd:'G', it:79,sp:82,st:77,en:80,du:81,di:84,sk:82,pa:75,pc:84,df:null,sc:null,ex:70,ld:65,ov:77,age:34,salaire:700000, ct:1},
+ {nom:'Karel Vejmelka',         po:'G', hd:'D', it:82,sp:88,st:82,en:84,du:88,di:83,sk:87,pa:71,pc:82,df:null,sc:null,ex:69,ld:65,ov:80,age:29,salaire:3500000,ct:1}
+];
 
-/* Saison de référence Y21 (DALLAS) */
+/* Saison de référence Y21 (XtraStats du 21 avril 2026) — patineurs DALLAS (XtraStats du 21 avril 2026).
+   Sert de repère tant que la saison Y22 n'a pas produit de matchs. */
 const SECOURS_Y21 = [
- {nom:'Arturs Silovs', gp:4, goals:0, assists:0, pts:0, shots:0, pim:0, mp:0, hits:0},
- {nom:'Bryan Rust', gp:78, goals:13, assists:16, pts:29, shots:81, pim:27, mp:780, hits:70},
- {nom:'Casey DeSmith', gp:41, goals:0, assists:0, pts:0, shots:0, pim:0, mp:0, hits:0},
- {nom:'Curtis Lazar', gp:82, goals:21, assists:30, pts:51, shots:184, pim:20, mp:1560, hits:218},
- {nom:'Daniel Sprong', gp:69, goals:8, assists:14, pts:22, shots:48, pim:12, mp:485, hits:25},
- {nom:'Danila Yurov', gp:81, goals:20, assists:23, pts:43, shots:147, pim:57, mp:1218, hits:61},
- {nom:'Evgeny Dadonov', gp:60, goals:5, assists:6, pts:11, shots:33, pim:2, mp:342, hits:17},
- {nom:'Helge Grans', gp:82, goals:4, assists:27, pts:31, shots:92, pim:38, mp:1525, hits:133},
- {nom:'Jakub Vrana', gp:80, goals:35, assists:37, pts:72, shots:227, pim:60, mp:1708, hits:64},
- {nom:'Julian Lutz', gp:75, goals:9, assists:22, pts:31, shots:100, pim:82, mp:873, hits:79},
- {nom:'Justin G. Holl', gp:1, goals:0, assists:1, pts:1, shots:1, pim:0, mp:10, hits:1},
- {nom:'Karel Vejmelka', gp:48, goals:0, assists:0, pts:0, shots:0, pim:0, mp:0, hits:0},
- {nom:'Kirby Dach', gp:75, goals:30, assists:47, pts:77, shots:174, pim:68, mp:1623, hits:92},
- {nom:'Marshall Warren', gp:3, goals:0, assists:1, pts:1, shots:5, pim:2, mp:41, hits:2},
- {nom:'Michael Vukojevic', gp:82, goals:8, assists:14, pts:22, shots:100, pim:83, mp:1584, hits:145},
- {nom:'Oliver Ekman-Larsson', gp:82, goals:4, assists:12, pts:16, shots:46, pim:15, mp:757, hits:62},
- {nom:'Patrick Laine', gp:81, goals:21, assists:39, pts:60, shots:183, pim:29, mp:1616, hits:114},
- {nom:'Quinn Hughes', gp:81, goals:15, assists:45, pts:60, shots:154, pim:28, mp:1893, hits:101},
- {nom:'Rasmus Andersson', gp:78, goals:9, assists:31, pts:40, shots:125, pim:53, mp:1403, hits:107},
- {nom:'Simon Benoit', gp:57, goals:1, assists:2, pts:3, shots:10, pim:6, mp:219, hits:32},
- {nom:'Tobias Bjornfot', gp:79, goals:6, assists:17, pts:23, shots:97, pim:51, mp:1715, hits:135},
- {nom:'Tyler Boucher', gp:78, goals:21, assists:17, pts:38, shots:125, pim:76, mp:1179, hits:146},
- {nom:'Vasily Podkolzin', gp:81, goals:34, assists:58, pts:92, shots:210, pim:69, mp:1642, hits:91},
- {nom:'Vitali Abramov', gp:78, goals:26, assists:26, pts:52, shots:172, pim:52, mp:1408, hits:47},
- {nom:'Vladislav Kolyachonok', gp:21, goals:2, assists:3, pts:5, shots:15, pim:11, mp:176, hits:5}
+ {nom:'Bryan Rust',            gp:78, goals:13, assists:16, pts:29, shots:81,  pim:27, mp:780,  hits:70},
+ {nom:'Curtis Lazar',          gp:82, goals:21, assists:30, pts:51, shots:184, pim:20, mp:1560, hits:218},
+ {nom:'Daniel Sprong',         gp:69, goals:8,  assists:14, pts:22, shots:48,  pim:12, mp:485,  hits:25},
+ {nom:'Danila Yurov',          gp:81, goals:20, assists:23, pts:43, shots:147, pim:57, mp:1218, hits:61},
+ {nom:'Evgeny Dadonov',        gp:60, goals:5,  assists:6,  pts:11, shots:33,  pim:2,  mp:342,  hits:17},
+ {nom:'Helge Grans',           gp:82, goals:4,  assists:27, pts:31, shots:92,  pim:38, mp:1525, hits:133},
+ {nom:'Jakub Vrana',           gp:80, goals:35, assists:37, pts:72, shots:227, pim:60, mp:1708, hits:64},
+ {nom:'Julian Lutz',           gp:75, goals:9,  assists:22, pts:31, shots:100, pim:82, mp:873,  hits:79},
+ {nom:'Justin G. Holl',        gp:1,  goals:0,  assists:1,  pts:1,  shots:1,   pim:0,  mp:10,   hits:1},
+ {nom:'Kirby Dach',            gp:75, goals:30, assists:47, pts:77, shots:174, pim:68, mp:1623, hits:92},
+ {nom:'Marshall Warren',       gp:3,  goals:0,  assists:1,  pts:1,  shots:5,   pim:2,  mp:41,   hits:2},
+ {nom:'Michael Vukojevic',     gp:82, goals:8,  assists:14, pts:22, shots:100, pim:83, mp:1584, hits:145},
+ {nom:'Oliver Ekman-Larsson',  gp:82, goals:4,  assists:12, pts:16, shots:46,  pim:15, mp:757,  hits:62},
+ {nom:'Patrick Laine',         gp:81, goals:21, assists:39, pts:60, shots:183, pim:29, mp:1616, hits:114},
+ {nom:'Quinn Hughes',          gp:81, goals:15, assists:45, pts:60, shots:154, pim:28, mp:1893, hits:101},
+ {nom:'Rasmus Andersson',      gp:78, goals:9,  assists:31, pts:40, shots:125, pim:53, mp:1403, hits:107},
+ {nom:'Simon Benoit',          gp:57, goals:1,  assists:2,  pts:3,  shots:10,  pim:6,  mp:219,  hits:32},
+ {nom:'Tobias Bjornfot',       gp:79, goals:6,  assists:17, pts:23, shots:97,  pim:51, mp:1715, hits:135},
+ {nom:'Tyler Boucher',         gp:78, goals:21, assists:17, pts:38, shots:125, pim:76, mp:1179, hits:146},
+ {nom:'Vasily Podkolzin',      gp:81, goals:34, assists:58, pts:92, shots:210, pim:69, mp:1642, hits:91},
+ {nom:'Vitali Abramov',        gp:78, goals:26, assists:26, pts:52, shots:172, pim:52, mp:1408, hits:47},
+ {nom:'Vladislav Kolyachonok', gp:21, goals:2,  assists:3,  pts:5,  shots:15,  pim:11, mp:176,  hits:5}
 ];
 </script>
 <script>
@@ -1328,8 +1352,8 @@ function xtraEstArchive(xtra, matchsEq){
 }
 
 function extraireFiche(html){
-  const m = html.match(/DALLAS\s+(\d+)-(\d+)-(\d+)/);
-  return m ? `DALLAS ${m[1]}-${m[2]}-${m[3]}` : null;
+  const m = html.match(new RegExp(CONFIG.equipe + '\\s+(\\d+)-(\\d+)-(\\d+)'));
+  return m ? `${CONFIG.equipe} ${m[1]}-${m[2]}-${m[3]}` : null;
 }
 
 async function actualiserTout(){
@@ -1404,8 +1428,8 @@ function indexParNom(liste){
 function productionDe(j){
   const cle = normaliserNom(j.nom);
   if (ETAT.modeY21){
-    // Mode vérification : on priorise l'archive XtraStats récupérée en direct, avec le fallback local en dernier recours.
-    const y = indexParNom(ETAT.xtra).get(cle) || indexParNom(SECOURS_Y21).get(cle) || null;
+    // Mode vérification : totaux complets de la Y21 (données intégrées), aucune projection.
+    const y = indexParNom(SECOURS_Y21).get(cle) || null;
     if (!y) return null;
     const out = {
       gp: y.gp ?? null, goals: y.goals ?? null, assists: y.assists ?? null, pts: y.pts ?? null,

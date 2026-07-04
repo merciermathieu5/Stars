@@ -31,34 +31,32 @@ const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
   if (!S){ console.error('Arrêt.'); process.exit(1); }
 
   console.log('— Données de secours');
-  egal(S.SECOURS_ROSTER.length, 25, '25 joueurs dans la formation de secours');
-  const kotka = S.SECOURS_ROSTER.find(j => j.nom === 'Jesperi Kotkaniemi');
-  egal(kotka.salaire, 7250000, 'Salaire Kotkaniemi');
-  egal(kotka.ct, 3, 'Contrat Kotkaniemi 3 ans');
-  egal(S.SECOURS_Y21.length, 20, '20 patineurs dans la référence Y21');
-  const schwartzY21 = S.SECOURS_Y21.find(x => x.nom === 'Jaden Schwartz');
-  egal(schwartzY21.pts, 94, 'Schwartz 94 points en Y21');
+  egal(S.SECOURS_ROSTER.length, 24, '24 joueurs dans la formation de secours (pro)');
+  const lazar = S.SECOURS_ROSTER.find(j => j.nom === 'Curtis Lazar');
+  egal(lazar.salaire, 7250000, 'Salaire Lazar');
+  egal(lazar.ct, 1, 'Contrat Lazar 1 an');
+  egal(S.SECOURS_Y21.length, 22, '22 patineurs dans la référence Y21');
+  const vranaY21 = S.SECOURS_Y21.find(x => x.nom === 'Jakub Vrana');
+  egal(vranaY21.pts, 72, 'Vrana 72 points en Y21');
 
   console.log('— Moteur de profils (tableaux 10-11-12) et matrices associées');
   const joueurDe = nom => S.SECOURS_ROSTER.find(j => j.nom === nom);
   const profilDe = nom => S.determinerProfil(joueurDe(nom));
-  egal(profilDe('Jesperi Kotkaniemi').profil, 'Elite', 'Kotkaniemi → Elite');
-  egal(profilDe('Jesperi Kotkaniemi').mat, 'ELITE', 'Kotkaniemi → matrice ELITE');
-  tableauEgal(profilDe('Jesperi Kotkaniemi').stats, ['shotpct','gwg','ppg','pts','pmrang'],
+  egal(profilDe('Patrick Laine').profil, 'Elite', 'Laine → Elite');
+  egal(profilDe('Patrick Laine').mat, 'ELITE', 'Laine → matrice ELITE');
+  tableauEgal(profilDe('Patrick Laine').stats, ['shotpct','gwg','ppg','pts','pmrang'],
     'Stats évaluées Elite = tableau 20 (PCTG, GWG, PP, P, +/-)');
-  egal(profilDe('Jaden Schwartz').profil, 'Playmaker', 'Schwartz → Playmaker');
-  tableauEgal(profilDe('Jaden Schwartz').stats, ['assists','pts'], 'Stats Playmaker = A, P');
-  egal(profilDe('Travis Konecny').profil, 'Power Forward', 'Konecny → Power Forward');
-  egal(profilDe('Nathan Legare').profil, 'Prospect Power Forward', 'Legare (24 ans) → Prospect Power Forward');
-  egal(profilDe('Nathan Legare').mat, 'POWERFWD', 'Prospect Power Forward → même matrice POWERFWD');
-  egal(profilDe('Adam Fox').profil, 'DEliteQB', 'Fox → DEliteQB');
-  egal(profilDe('Haydn Fleury').profil, 'DEliteShutdown', 'Fleury → DEliteShutdown');
-  egal(profilDe('Tyler Myers').profil, 'DEliteShutdown', 'Myers → DEliteShutdown');
-  egal(profilDe('Alexandar Georgiev').profil, 'Starter Goalie', 'Georgiev (OV 80) → Starter Goalie');
-  tableauEgal(profilDe('Alexandar Georgiev').stats, ['hs','svpct','qggp','ming'], 'Stats Starter = HS, SV%, QG/GP, MIN');
-  egal(profilDe('Cal Petersen').profil, 'Backup Goalie', 'Petersen (OV 78) → Backup Goalie');
-  tableauEgal(profilDe('Cal Petersen').stats, ['mp','qggp','psv'], 'Stats Backup = MP, QG/GP, Psv');
-  egal(profilDe('Brad Lambert').profil, 'Prospect Sniper', 'Lambert → Prospect Sniper');
+  egal(profilDe('Curtis Lazar').profil, 'Power Forward', 'Lazar → Power Forward');
+  egal(profilDe('Jakub Vrana').profil, 'Two-Way Forward', 'Vrana → Two-Way Forward');
+  tableauEgal(profilDe('Jakub Vrana').stats, ['pts','pmrang'], 'Stats Two-Way = P, +/-');
+  egal(profilDe('Kirby Dach').profil, 'Prospect Elite', 'Dach (24 ans) → Prospect Elite');
+  egal(profilDe('Kirby Dach').mat, 'ELITE', 'Prospect Elite → même matrice ELITE');
+  egal(profilDe('Quinn Hughes').profil, 'DEliteQB', 'Hughes → DEliteQB');
+  egal(profilDe('Karel Vejmelka').profil, 'Starter Goalie', 'Vejmelka (OV 80) → Starter Goalie');
+  tableauEgal(profilDe('Karel Vejmelka').stats, ['hs','svpct','qggp','ming'], 'Stats Starter = HS, SV%, QG/GP, MIN');
+  egal(profilDe('Arturs Silovs').profil, 'Backup Goalie', 'Silovs (OV 76) → Backup Goalie');
+  tableauEgal(profilDe('Arturs Silovs').stats, ['mp','qggp','psv'], 'Stats Backup = MP, QG/GP, Psv');
+  egal(profilDe('Casey DeSmith').profil, 'Backup Goalie', 'DeSmith (34 ans, OV 77) → Backup Goalie (règle 6.2.5)');
 
   console.log('— Matrices Y17 (article 6.2.6) : consultation par overall');
   egal(Object.keys(S.MATRICES).length, 15, '15 matrices de profils');
@@ -137,13 +135,13 @@ const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
   egal(S.convertirJet(51), -1, 'Jet 51 → -1');
   egal(S.convertirJet(10), -4, 'Jet 10 → -4');
   egal(S.convertirJet(-25), -5, 'Jet -25 → -5');
-  const four = S.fourchetteRecote(kotka, 10); // 25 ans → ModA+5 → base 75
-  egal(four.base, 75, 'Base = 60 + ModA(5) + ModS(10)');
-  egal(four.min, 0, 'Pire jet (76) → 0');
-  egal(four.max, 1, 'Meilleur jet (115) → +1');
+  const four = S.fourchetteRecote(lazar, 10); // 30 ans → ModA-5 → base 65
+  egal(four.base, 65, 'Base = 60 + ModA(-5) + ModS(10)');
+  egal(four.min, -1, 'Pire jet (66) → -1');
+  egal(four.max, 1, 'Meilleur jet (105) → +1');
 
   console.log('— Priorité des seuils : rangée personnalisée > Y17 ; surcharge = Mémorable seul');
-  const jk = joueurDe('Jesperi Kotkaniemi');
+  const jk = joueurDe('Patrick Laine');
   jk._profil = S.determinerProfil(jk);
   let s = S.seuilsPour(jk, 'pts', {}, {});
   tableauEgal(s.seuils, [97,86,74,63,37,-1], 'Seuils Y17 par défaut (OV 82)');
@@ -192,21 +190,21 @@ const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
   console.log('— Parseur XtraStats (fixture texte)');
   const fixtureXtra = [
     '    Player                    Team            POS GP   G   A   P  Sh PiM   MP   H Sh/G',
-    '    [Jaden Schwartz](https://x/#Jaden Schwartz) SANJOSE         C   82  25  69  94 187  10 1767  81 2.28',
+    '    [Curtis Lazar](https://x/#Curtis Lazar) DALLAS          C   82  21  30  51 184  20 1560 218 2.24',
     '    [Alex Tuch](https://x/#Alex Tuch) ANAHEIM         RW  77  27  32  59 183  16 1503 243 2.38',
-    '    [* Backup_RW](https://x/#Backup_RW) SANJOSE         LW   3   0   0   0   0   0    0   0 0.00'
+    '    [* Backup_RW](https://x/#Backup_RW) DALLAS          LW   3   0   0   0   0   0    0   0 0.00'
   ].join('\n');
-  const x = S.parseXtra(fixtureXtra, 'SANJOSE');
-  egal(x.length, 2, 'Deux patineurs SANJOSE extraits (Anaheim exclu)');
-  egal(x[0].hits, 81, 'MEÉ de Schwartz depuis XtraStats');
-  egal(x[0].mp, 1767, 'Minutes de Schwartz depuis XtraStats');
+  const x = S.parseXtra(fixtureXtra, 'DALLAS');
+  egal(x.length, 2, 'Deux patineurs DALLAS extraits (Anaheim exclu)');
+  egal(x[0].hits, 218, 'MEÉ de Lazar depuis XtraStats');
+  egal(x[0].mp, 1560, 'Minutes de Lazar depuis XtraStats');
 
   console.log('— Rendu de l\'interface');
   const doc = W.document;
   const rangees = doc.querySelectorAll('#tableAlignement tbody tr');
-  egal(rangees.length, 25, '25 rangées dans la table d\'alignement');
+  egal(rangees.length, 24, '24 rangées dans la table d\'alignement');
   ok(doc.querySelector('#alignSommaire').textContent.includes('Masse salariale'), 'Sommaire de masse salariale rendu');
-  ok(doc.querySelector('#ficheEquipe').textContent.includes('SANJOSE'), 'Fiche d\'équipe affichée');
+  ok(doc.querySelector('#ficheEquipe').textContent.includes('DALLAS'), 'Fiche d\'équipe affichée');
   const cartes = doc.querySelectorAll('#progGrille .joueur-carte');
   ok(cartes.length >= 20, 'Cartes de progression rendues (' + cartes.length + ')');
   ok(doc.querySelector('#progGrille').textContent.includes('ModS estimé'), 'ModA / ModS affichés sur les cartes');
@@ -225,11 +223,11 @@ const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
   console.log('— Masse salariale (cohérence)');
   const actifs = S.SECOURS_ROSTER.filter(x2 => !x2.backup);
   const masse = actifs.reduce((s2, x2) => s2 + x2.salaire, 0);
-  egal(masse, 84250000, 'Masse salariale des 23 actifs = 84 250 000 $');
-  ok(doc.querySelector('#alignSommaire .stat-carte').classList.contains('alerte'), 'Dépassement du plafond signalé en alerte');
+  egal(masse, 75561025, 'Masse salariale des 24 pros = 75 561 025 $');
+  ok(!doc.querySelector('#alignSommaire .stat-carte').classList.contains('alerte'), 'Sous le plafond : aucune alerte');
 
   console.log('— Divers');
-  egal(S.matchsEquipe(), 0, 'Fiche 0-0-0 → 0 match d\'équipe');
+  egal(S.matchsEquipe(), 0, 'Fiche DALLAS 0-0-0 → 0 match d\'équipe');
 
   console.log('— XtraStats en repli de TeamScoring (archive ou saison courante)');
   const xtraY21 = [{nom:'Aa', gp:82}, {nom:'Bb', gp:75}];
@@ -245,10 +243,10 @@ const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
     const avantY21 = ETAT.xtraEstY21, avantScoring = ETAT.scoring;
     ETAT.xtraEstY21 = false;            // XtraStats jugé «saison courante»
     ETAT.scoring = {patineurs:[], gardiens:[]}; // TeamScoring indisponible
-    const jSchwartz = S.SECOURS_ROSTER.find(x2=>x2.nom==='Jaden Schwartz');
-    const prodRepli = S.productionDe(jSchwartz);
+    const jVrana = S.SECOURS_ROSTER.find(x2=>x2.nom==='Jakub Vrana');
+    const prodRepli = S.productionDe(jVrana);
     ok(!!prodRepli && prodRepli._xtraSource===true, 'Production servie par XtraStats (drapeau _xtraSource)');
-    egal(prodRepli?.pts, 94, 'Points lus depuis XtraStats en repli');
+    egal(prodRepli?.pts, 72, 'Points lus depuis XtraStats en repli');
     egal(prodRepli?._reference, false, 'Pas traitée comme simple référence Y21');
     ETAT.xtraEstY21 = avantY21; ETAT.scoring = avantScoring;
   }
@@ -269,16 +267,16 @@ const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
   btnY21.click();
   egal(S.ETAT.modeY21, true, 'Bascule activée');
   ok(doc.querySelector('#bandeauY21').style.display !== 'none', 'Bandeau de vérification affiché');
-  const prodY21 = S.productionDe(S.SECOURS_ROSTER.find(x2=>x2.nom==='Jaden Schwartz'));
+  const prodY21 = S.productionDe(S.SECOURS_ROSTER.find(x2=>x2.nom==='Jakub Vrana'));
   egal(prodY21?._modeY21, true, 'Production servie par les données Y21 intégrées');
-  egal(prodY21?.pts, 94, 'Points Y21 de Schwartz');
-  const carteSchwartz = [...doc.querySelectorAll('#progGrille .joueur-carte')]
-    .find(c=>c.querySelector('.jc-nom').textContent==='Jaden Schwartz');
-  ok(!!carteSchwartz, 'Carte de Schwartz rendue en mode Y21');
-  ok(carteSchwartz.textContent.includes('Mode vérification Y21'), 'Note du mode Y21 sur la carte');
-  ok(carteSchwartz.querySelectorAll('.badge-etat.memorable').length >= 2,
-     'Schwartz Mémorable en passes et en points (69 A > 46 ; 94 PTS > 73)');
-  ok(!carteSchwartz.textContent.includes('proj.'), 'Aucune projection affichée (saison complète)');
+  egal(prodY21?.pts, 72, 'Points Y21 de Vrana');
+  const carteVrana = [...doc.querySelectorAll('#progGrille .joueur-carte')]
+    .find(c=>c.querySelector('.jc-nom').textContent==='Jakub Vrana');
+  ok(!!carteVrana, 'Carte de Vrana rendue en mode Y21');
+  ok(carteVrana.textContent.includes('Mode vérification Y21'), 'Note du mode Y21 sur la carte');
+  ok(carteVrana.querySelectorAll('.badge-etat.memorable').length >= 1,
+     'Vrana Mémorable en points (72 PTS > 68, Two-Way OV 82)');
+  ok(!carteVrana.textContent.includes('proj.'), 'Aucune projection affichée (saison complète)');
   btnY21.click();
   egal(S.ETAT.modeY21, false, 'Retour à la saison en cours');
   ok(doc.querySelector('#bandeauY21').style.display === 'none', 'Bandeau retiré');
