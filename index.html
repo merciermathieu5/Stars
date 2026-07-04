@@ -1383,8 +1383,8 @@ function indexParNom(liste){
 function productionDe(j){
   const cle = normaliserNom(j.nom);
   if (ETAT.modeY21){
-    // Mode vérification : totaux complets de la Y21 (données intégrées), aucune projection.
-    const y = indexParNom(SECOURS_Y21).get(cle) || null;
+    // Mode vérification : on priorise l'archive XtraStats récupérée en direct, avec le fallback local en dernier recours.
+    const y = indexParNom(ETAT.xtra).get(cle) || indexParNom(SECOURS_Y21).get(cle) || null;
     if (!y) return null;
     const out = {
       gp: y.gp ?? null, goals: y.goals ?? null, assists: y.assists ?? null, pts: y.pts ?? null,
