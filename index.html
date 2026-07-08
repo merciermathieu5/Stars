@@ -107,6 +107,55 @@
   .profil-tag{display:inline-block; font-size:.62rem; letter-spacing:.5px; padding:2px 7px; border:1px solid var(--teal); border-radius:10px; color:var(--teal-bright); text-transform:uppercase;}
   .profil-tag.d-tag{border-color:#3a6d92; color:#6db3e8;}
   .profil-tag.g-tag{border-color:var(--orange); color:var(--orange-bright);}
+  /* Colonne Contrat : étroite et collée à droite, toujours visible sans défiler */
+  th.col-resign, td.col-resign{
+    position:sticky; right:0; z-index:2; text-align:center; width:104px; min-width:104px;
+    background:var(--panel); box-shadow:inset 1px 0 0 var(--line); padding:5px 8px;
+  }
+  thead th.col-resign{background:var(--teal-deep); z-index:4; cursor:default;}
+  tbody tr:hover td.col-resign{background:var(--panel2);}
+  tbody tr.resigne td.col-resign{background:#1a1206;}
+  .btn-prolong{font-family:var(--font-data); font-size:.65rem; letter-spacing:.4px; padding:5px 9px; cursor:pointer;
+    background:transparent; color:var(--teal-bright); border:1px solid var(--teal); border-radius:3px; white-space:nowrap;}
+  .btn-prolong:hover{background:var(--teal-dark); color:var(--txt);}
+  .btn-prolong.actif{border-color:var(--orange); color:var(--orange-bright); background:#2a1a04;}
+  .resign-tag{display:inline-block; font-size:.55rem; letter-spacing:.5px; padding:1px 5px; border-radius:8px;
+    background:#3a2506; color:var(--orange-bright); text-transform:uppercase; margin-left:4px;}
+  tbody tr.resigne{background:rgba(234,114,0,.06);}
+
+  /* ---------- Fenêtre Prolongation de contrat ---------- */
+  .modal-fond{position:fixed; inset:0; background:rgba(0,0,0,.72); display:flex; align-items:center; justify-content:center;
+    z-index:100; padding:20px;}
+  .modal-fond[hidden]{display:none;}
+  .modal{background:var(--panel); border:1px solid var(--line); border-top:3px solid var(--orange);
+    width:100%; max-width:440px; max-height:90vh; overflow-y:auto;}
+  .modal-tete{display:flex; align-items:center; justify-content:space-between; padding:16px 20px 12px; border-bottom:1px solid var(--line);}
+  .modal-tete h3{margin:0; font-size:.85rem; text-transform:uppercase; letter-spacing:1.5px; color:var(--orange-bright);}
+  .modal-x{background:none; border:none; color:var(--txt-faint); font-size:1.5rem; line-height:1; cursor:pointer; padding:0 4px;}
+  .modal-x:hover{color:var(--txt);}
+  .modal-joueur{padding:14px 20px; border-bottom:1px solid var(--line);}
+  .mj-nom{display:block; font-size:1.1rem; font-weight:600; color:var(--txt);}
+  .mj-meta{display:block; font-family:var(--font-data); font-size:.72rem; color:var(--txt-dim); margin-top:3px;}
+  .modal-grille{padding:16px 20px; display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .modal-grille label{display:flex; flex-direction:column; gap:5px; font-size:.65rem; text-transform:uppercase;
+    letter-spacing:1px; color:var(--txt-faint);}
+  .modal-grille label.large{grid-column:1 / -1;}
+  .modal-grille select, .modal-grille input{font-family:var(--font-data); font-size:.85rem; background:var(--ink); color:var(--txt);
+    border:1px solid var(--line); border-radius:3px; padding:8px 9px;}
+  .modal-grille select:focus, .modal-grille input:focus{outline:none; border-color:var(--orange);}
+  .modal-min{padding:0 20px 14px; font-family:var(--font-data); font-size:.72rem; color:var(--txt-dim);}
+  .modal-min b{color:var(--teal-bright);}
+  .modal-impact{margin:0 20px 16px; padding:12px 14px; background:var(--panel2); border-left:3px solid var(--teal);
+    font-family:var(--font-data); font-size:.72rem; color:var(--txt-dim); line-height:1.6;}
+  .modal-impact.alerte{border-left-color:var(--bad);}
+  .modal-impact b{color:var(--txt);}
+  .modal-actions{display:flex; gap:8px; justify-content:flex-end; padding:0 20px 18px; flex-wrap:wrap;}
+  .modal-actions button{font-family:var(--font-data); font-size:.72rem; letter-spacing:.5px; padding:9px 16px; cursor:pointer;
+    border-radius:3px; border:1px solid var(--teal); background:var(--teal); color:#fff;}
+  .modal-actions button.secondaire{background:transparent; color:var(--txt-dim); border-color:var(--line);}
+  .modal-actions button.secondaire:hover{color:var(--txt); border-color:var(--txt-faint);}
+  .modal-actions button.danger{background:transparent; color:var(--bad); border-color:var(--bad); margin-right:auto;}
+  .modal-actions button.danger:hover{background:var(--bad); color:#fff;}
 
   /* ---------- Progression ---------- */
   .filtres{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px;}
@@ -331,7 +380,8 @@ const CLES_LS = {
   matrices: 'sjs_matrices_v1',
   overrides: 'sjs_attentes_joueurs_v1',
   proxy: 'sjs_proxy_prefere_v1',
-  cache: 'sjs_cache_v1'
+  cache: 'sjs_cache_v1',
+  resign: 'sjs_resignatures_v1'
 };
 
 /* ------------------ DÉFINITION DES STATS ------------------ */
@@ -1002,6 +1052,26 @@ function fmtArgent(n){
   if (n===null || n===undefined) return '—';
   return n.toLocaleString('fr-CA').replace(/,/g,' ') + ' $';
 }
+/* Format compact pour les champs de re-signature : 8 500 000 → «8,5 M», 900 000 → «900 k». */
+function fmtArgentCourt(n){
+  if (n===null || n===undefined) return '—';
+  if (n >= 1000000){
+    const m = n/1000000;
+    return (Math.abs(m%1)<1e-9 ? String(m) : m.toFixed(1).replace('.',',')) + ' M';
+  }
+  return Math.round(n/1000) + ' k';
+}
+/* Interprète un montant saisi : «8,5 M», «8.5M», «900 k», «900000», «8 500 000». */
+function parseArgent(txt){
+  if (typeof txt !== 'string') return null;
+  let s = txt.trim().toLowerCase().replace(/\$/g,'').replace(/\u00a0/g,' ');
+  const mMatch = s.match(/^([\d.,\s]+)\s*m$/);
+  const kMatch = s.match(/^([\d.,\s]+)\s*k$/);
+  if (mMatch){ const v = parseFloat(mMatch[1].replace(/\s/g,'').replace(',','.')); return isFinite(v)?Math.round(v*1000000):null; }
+  if (kMatch){ const v = parseFloat(kMatch[1].replace(/\s/g,'').replace(',','.')); return isFinite(v)?Math.round(v*1000):null; }
+  const brut = parseFloat(s.replace(/\s/g,'').replace(',','.'));
+  return isFinite(brut) ? Math.round(brut) : null;
+}
 function fmtStat(cle, v){
   if (v===null || v===undefined || !isFinite(v)) return '—';
   const def = STATS_DEF[cle] || {};
@@ -1500,22 +1570,109 @@ function flash(msg){
   setTimeout(()=>f.classList.remove('visible'), 2600);
 }
 
+/* ---------- Charte salariale des re-signatures (CHARTE OFFICIELLE Y22, cap 104 M) ----------
+   Salaires MINIMUMS en dollars, indexés sur l'OV (74- à 87+). Quatre chartes selon
+   le statut, avec sous-colonnes d'âge pour les UFA. Valeurs transcrites de la charte
+   fournie (exprimées en milliers dans le document : 700 $ = 700 000 $).
+   - RFA (6.4.1)          : 28 ans et -, durée 1 à 7 ans, une seule colonne
+   - UFA (6.4.2)          : durée 1 à 4 ans, colonnes «34-» et «35+»
+   - UFA Ronde 2 (6.4.3)  : durée 1 à 2 ans, colonnes «34-» et «35+»
+   - Sans contrat (6.4.4) : durée 1 an, colonnes «34-» et «35+»
+   Index de ligne : 0→OV 74 et moins, 1→75, … 12→OV 87 et plus (clamp aux bornes). */
+const CHARTE_OV_MIN = 74, CHARTE_OV_MAX = 87;
+const CHARTE_SALAIRE = {
+  //                 OV:  74-    75     76     77     78     79     80     81     82      83      84      85      86      87+
+  RFA:              [  700,  775,  825,  950, 2250, 3750, 5750, 7500, 8750, 10500, 12250, 13750, 15500, 17500],
+  UFA_34:           [  900,  950, 1150, 1500, 2250, 3500, 5000, 6250, 7500,  8750, 10250, 12000, 13500, 15500],
+  UFA_35:           [  900,  900, 1000, 1100, 1750, 2250, 3250, 4250, 5000,  6000,  7250,  8750, 10000, 11500],
+  UFAR2_34:         [  900,  900,  950, 1150, 1500, 2500, 3500, 5000, 6250,  7500,  8750, 10250, 12000, 13500],
+  UFAR2_35:         [  900,  900,  900, 1000, 1100, 1750, 2250, 3250, 4250,  5000,  6000,  7250,  8750, 10000],
+  SANS_34:          [  900,  900,  900,  950, 1150, 1500, 2500, 3500, 5000,  6250,  7500,  8750, 10250, 12000],
+  SANS_35:          [  900,  900,  900, 1000, 1000, 1100, 1750, 2250, 3250,  4250,  5000,  6000,  7250,  9000]
+};
+
+/* Statut de re-signature déduit de l'âge (règle simple retenue) :
+   28 ans et moins → RFA ; 29 ans et plus → UFA. Les variantes Ronde 2 et Sans
+   contrat existent dans la charte et peuvent être choisies manuellement. */
+function statutResignature(j){ return j.age <= 28 ? 'RFA' : 'UFA'; }
+
+/* Clé de charte à partir du statut et de l'âge (tranche 34- / 35+ pour les UFA). */
+function cleCharte(statut, age){
+  if (statut === 'RFA') return 'RFA';
+  const tranche = age >= 35 ? '35' : '34';
+  if (statut === 'UFA')   return 'UFA_' + tranche;
+  if (statut === 'UFAR2') return 'UFAR2_' + tranche;
+  if (statut === 'SANS')  return 'SANS_' + tranche;
+  return 'UFA_' + tranche;
+}
+
+/* Échelon OV effectif : règle RFA — le DG peut donner 1 à 7 saisons, mais chaque
+   année au-delà de 3 monte l'échelon de 1 (4 ans → OV+1, … 7 ans → OV+4). */
+function echelonEffectif(ov, statut, duree){
+  const bonus = (statut === 'RFA' && (duree || 1) > 3) ? (duree - 3) : 0;
+  return Math.round(ov) + bonus;
+}
+
+/* Salaire minimum de la charte pour un OV, un statut, un âge et une durée (en dollars).
+   La durée n'influence que les RFA (échelon dynamique ci-dessus). */
+function salaireMinimum(ov, statut, age, duree){
+  const cle = cleCharte(statut, age);
+  const table = CHARTE_SALAIRE[cle];
+  if (!table) return null;
+  const ovEff = echelonEffectif(ov, statut, duree);
+  const i = Math.max(0, Math.min(CHARTE_OV_MAX - CHARTE_OV_MIN, ovEff - CHARTE_OV_MIN));
+  return table[i] * 1000;
+}
+
+/* Durée maximale permise par la charte selon le statut. */
+function dureeMaxCharte(statut){
+  return statut==='RFA' ? 7 : statut==='UFA' ? 4 : statut==='UFAR2' ? 2 : 1;
+}
+
+/* État des re-signatures (persisté). Clé = nom normalisé du joueur →
+   {statut, salaire}. Le joueur re-signé est réintégré au calcul de la masse. */
+function litResignatures(){
+  try { return JSON.parse(localStorage.getItem(CLES_LS.resign) || '{}'); }
+  catch { return {}; }
+}
+function ecritResignatures(o){ localStorage.setItem(CLES_LS.resign, JSON.stringify(o)); }
+
+/* Plafond salarial de la ligue (Y22). */
+const PLAFOND = 104000000;
+
+/* Masse salariale pour un état de prolongations donné.
+   Exclut les backups et les joueurs sans contrat actif (0 an) NON prolongés.
+   Un joueur prolongé compte au plafond avec son salaire de prolongation. */
+function calculerMasse(resignMap){
+  const r = resignMap || litResignatures();
+  const actifs = ETAT.roster.filter(j=>!j.backup);
+  let masse = 0;
+  for (const j of actifs){
+    const sig = r[normaliserNom(j.nom)];
+    if (sig) masse += sig.salaire;
+    else if (j.ct > 0) masse += (j.salaire || 0);
+  }
+  return {masse, cap: PLAFOND};
+}
+
 /* ---------- Alignement ---------- */
 let triAlign = {col:'ov', desc:true};
 function rendreAlignement(){
   $('#ficheEquipe').textContent = ETAT.fiche;
   $('#sourceInfo').textContent = ETAT.source;
   const actifs = ETAT.roster.filter(j=>!j.backup);
-  const masse = actifs.reduce((s,j)=>s+(j.salaire||0),0);
-  const cap = 81500000;
+  const resign = litResignatures();
+  const {masse, cap} = calculerMasse(resign);
+  const nbResignes = actifs.filter(j=>resign[normaliserNom(j.nom)]).length;
   const moyOV = actifs.length ? (actifs.reduce((s,j)=>s+j.ov,0)/actifs.length) : 0;
   const vedettes = actifs.filter(j=>j.ov>=80).length;
   const expirants = actifs.filter(j=>j.ct===1).length;
+  const sansContrat = actifs.filter(j=>j.ct===0 && !resign[normaliserNom(j.nom)]).length;
   $('#alignSommaire').innerHTML = `
     <div class="stat-carte ${masse>cap?'alerte':''}">
       <div class="lbl">Masse salariale</div>
       <div class="val">${fmtArgent(masse)}</div>
-      <div class="det">plafond ${fmtArgent(cap)} · marge ${fmtArgent(cap-masse)}</div>
+      <div class="det">plafond ${fmtArgent(cap)} · marge ${fmtArgent(cap-masse)}${sansContrat?` · ${sansContrat} contrat${sansContrat>1?'s':''} à 0 an exclu${sansContrat>1?'s':''}`:''}${nbResignes?` · ${nbResignes} prolongé${nbResignes>1?'s':''}`:''}</div>
     </div>
     <div class="stat-carte"><div class="lbl">Joueurs actifs</div><div class="val">${actifs.length}</div>
       <div class="det">${actifs.filter(j=>j.po!=='G'&&j.po!=='D').length} av · ${actifs.filter(j=>j.po==='D').length} déf · ${actifs.filter(j=>j.po==='G').length} gar</div></div>
@@ -1527,7 +1684,8 @@ function rendreAlignement(){
   const cols = [
     ['nom','Nom'],['po','PO'],['age','Âge'],['it','IT'],['sp','SP'],['st','ST'],['en','EN'],
     ['du','DU'],['di','DI'],['sk','SK'],['pa','PA'],['pc','PC'],['df','DF'],['sc','SC'],
-    ['ex','EX'],['ld','LD'],['ov','OV'],['profil','Profil'],['salaire','Salaire'],['ct','CT']
+    ['ex','EX'],['ld','LD'],['ov','OV'],['profil','Profil'],['salaire','Salaire'],['ct','CT'],
+    ['resign','Re-signer']
   ];
   const liste = [...ETAT.roster].sort((a,b)=>{
     const c = triAlign.col;
@@ -1540,12 +1698,14 @@ function rendreAlignement(){
     return triAlign.desc ? -r : r;
   });
   let html = '<thead><tr>' + cols.map(([c,l])=>
-    `<th data-col="${c}" class="${triAlign.col===c?'tri-actif':''}">${l}${triAlign.col===c?(triAlign.desc?' ▾':' ▴'):''}</th>`).join('') + '</tr></thead><tbody>';
+    c==='resign'
+      ? `<th class="col-resign">${l}</th>`
+      : `<th data-col="${c}" class="${triAlign.col===c?'tri-actif':''}">${l}${triAlign.col===c?(triAlign.desc?' ▾':' ▴'):''}</th>`).join('') + '</tr></thead><tbody>';
   for (const j of liste){
     const p = j._profil;
     const badge = j.po==='G' ? 'g' : (j.po==='D' ? 'd' : '');
     const tag = j.po==='G' ? 'g-tag' : (j.po==='D' ? 'd-tag' : '');
-    html += `<tr class="${j.backup?'backup':''}">`;
+    html += `<tr class="${j.backup?'backup':''}${resign[normaliserNom(j.nom)]?' resigne':''}">`;
     html += `<td><span class="pos-badge ${badge}">${j.po}</span>${j.nom}</td>`;
     html += `<td>${j.po}</td><td>${j.age}</td>`;
     for (const c of ['it','sp','st','en','du','di','sk','pa','pc','df','sc','ex','ld']){
@@ -1555,12 +1715,25 @@ function rendreAlignement(){
     }
     html += `<td class="${j.ov>=82?'cote-elite':(j.ov>=78?'cote-forte':'')}"><strong>${j.ov}</strong></td>`;
     html += `<td style="text-align:left"><span class="profil-tag ${tag}">${p.profil}</span></td>`;
-    html += `<td>${fmtArgent(j.salaire)}</td><td>${j.ct??'—'}</td></tr>`;
+    const rSig = resign[normaliserNom(j.nom)];
+    const salAff = rSig ? rSig.salaire : j.salaire;
+    html += `<td>${fmtArgent(salAff)}${rSig?' <span class="resign-tag">prolongé</span>':''}</td>`;
+    const dSig = rSig ? (rSig.duree || dureeMaxCharte(rSig.statut)) : null;
+    html += `<td>${rSig ? dSig + ' an' + (dSig>1?'s':'') : (j.ct??'—')}</td>`;
+    // Colonne Contrat : bouton qui ouvre la fenêtre «Prolongation de contrat»
+    if (j.backup){
+      html += `<td class="col-resign">—</td>`;
+    } else {
+      html += `<td class="col-resign">`
+        + `<button class="btn-prolong ${rSig?'actif':''}" data-nom="${j.nom.replace(/"/g,'&quot;')}">`
+        + `${rSig?'✓ Prolongé':'Prolonger'}</button></td>`;
+    }
+    html += `</tr>`;
   }
   html += '</tbody>';
   const table = $('#tableAlignement');
   table.innerHTML = html;
-  table.querySelectorAll('th').forEach(th=>{
+  table.querySelectorAll('th[data-col]').forEach(th=>{
     th.addEventListener('click', ()=>{
       const c = th.dataset.col;
       if (triAlign.col===c) triAlign.desc = !triAlign.desc;
@@ -1568,6 +1741,169 @@ function rendreAlignement(){
       rendreAlignement();
     });
   });
+  attacherProlongations(table);
+}
+
+/* Le bouton de la colonne Contrat ouvre la fenêtre «Prolongation de contrat». */
+function attacherProlongations(table){
+  table.querySelectorAll('button.btn-prolong[data-nom]').forEach(b=>{
+    b.addEventListener('click', ()=> ouvrirProlongation(b.dataset.nom));
+  });
+}
+
+/* ---------- Fenêtre «Prolongation de contrat» ---------- */
+const LIBELLES_STATUT = {RFA:'RFA (28 ans et -)', UFA:'UFA', UFAR2:'UFA Ronde 2', SANS:'Joueur sans contrat'};
+
+function modalProlongation(){
+  let el = document.getElementById('modalProlong');
+  if (el) return el;
+  el = document.createElement('div');
+  el.id = 'modalProlong';
+  el.className = 'modal-fond';
+  el.hidden = true;
+  el.innerHTML = `
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mpTitre">
+      <div class="modal-tete">
+        <h3 id="mpTitre">Prolongation de contrat</h3>
+        <button class="modal-x" id="mpX" aria-label="Fermer">&times;</button>
+      </div>
+      <div class="modal-joueur">
+        <span class="mj-nom" id="mpNom"></span>
+        <span class="mj-meta" id="mpMeta"></span>
+      </div>
+      <div class="modal-grille">
+        <label>Statut
+          <select id="mpStatut">
+            <option value="RFA">RFA</option>
+            <option value="UFA">UFA</option>
+            <option value="UFAR2">UFA Ronde 2</option>
+            <option value="SANS">Sans contrat</option>
+          </select>
+        </label>
+        <label>Durée
+          <select id="mpDuree"></select>
+        </label>
+        <label class="large">Salaire annuel
+          <input type="text" id="mpSalaire" inputmode="numeric">
+        </label>
+      </div>
+      <div class="modal-min" id="mpMin"></div>
+      <div class="modal-impact" id="mpImpact"></div>
+      <div class="modal-actions">
+        <button class="danger" id="mpRetirer">Retirer la prolongation</button>
+        <button class="secondaire" id="mpAnnuler">Annuler</button>
+        <button id="mpOk">Prolonger</button>
+      </div>
+    </div>`;
+  document.body.appendChild(el);
+  el.addEventListener('click', e=>{ if (e.target === el) fermerProlongation(); });
+  el.querySelector('#mpX').addEventListener('click', fermerProlongation);
+  el.querySelector('#mpAnnuler').addEventListener('click', fermerProlongation);
+  document.addEventListener('keydown', e=>{ if (e.key === 'Escape' && !el.hidden) fermerProlongation(); });
+  return el;
+}
+
+function fermerProlongation(){
+  const el = document.getElementById('modalProlong');
+  if (el) el.hidden = true;
+}
+
+/* Remplit la liste des durées permises pour un statut (charte : RFA 7, UFA 4, R2 2, sans contrat 1). */
+function remplirDurees(sel, statut, choisie){
+  const max = dureeMaxCharte(statut);
+  sel.innerHTML = '';
+  for (let d = 1; d <= max; d++){
+    const o = document.createElement('option');
+    o.value = String(d);
+    o.textContent = d + (d > 1 ? ' ans' : ' an');
+    sel.appendChild(o);
+  }
+  sel.value = String(Math.min(choisie || 1, max));
+}
+
+function ouvrirProlongation(nom){
+  const j = ETAT.roster.find(x => x.nom === nom);
+  if (!j) return;
+  const el = modalProlongation();
+  const cle = normaliserNom(j.nom);
+  const dejaSigne = litResignatures()[cle] || null;
+
+  const selStatut = el.querySelector('#mpStatut');
+  const selDuree  = el.querySelector('#mpDuree');
+  const inSal     = el.querySelector('#mpSalaire');
+  const divMin    = el.querySelector('#mpMin');
+  const divImpact = el.querySelector('#mpImpact');
+  const btnRetirer= el.querySelector('#mpRetirer');
+  const btnOk     = el.querySelector('#mpOk');
+
+  el.querySelector('#mpNom').textContent = j.nom;
+  el.querySelector('#mpMeta').textContent =
+    `${j.po} · ${j.age} ans · OV ${j.ov} · ${j._profil.profil} · salaire actuel ${fmtArgent(j.salaire)} · CT ${j.ct ?? '—'}`;
+
+  const statutInit = dejaSigne ? dejaSigne.statut : statutResignature(j);
+  selStatut.value = statutInit;
+  // durée proposée : celle déjà signée, sinon 3 ans pour un RFA (dernier palier
+  // sans hausse d'échelon), sinon la durée max du statut
+  const dureeInit = dejaSigne ? dejaSigne.duree : (statutInit === 'RFA' ? 3 : dureeMaxCharte(statutInit));
+  remplirDurees(selDuree, statutInit, dureeInit);
+  const minInit = salaireMinimum(j.ov, statutInit, j.age, +selDuree.value);
+  inSal.value = fmtArgent(dejaSigne ? dejaSigne.salaire : minInit);
+
+  btnRetirer.style.display = dejaSigne ? '' : 'none';
+  btnOk.textContent = dejaSigne ? 'Mettre à jour' : 'Prolonger';
+
+  // Rafraîchit minimum, bornage du salaire et aperçu d'impact sur la masse.
+  const rafraichir = (clamper)=>{
+    const st = selStatut.value;
+    const duree = +selDuree.value;
+    const min = salaireMinimum(j.ov, st, j.age, duree);
+    const ovEff = echelonEffectif(j.ov, st, duree);
+    const noteEch = ovEff !== j.ov
+      ? ` · échelon <b>OV ${Math.min(ovEff, CHARTE_OV_MAX)}${ovEff>CHARTE_OV_MAX?'+':''}</b> (+${ovEff-j.ov} : ${duree} ans de RFA, +1 par année après 3)`
+      : '';
+    divMin.innerHTML = `Minimum de la charte (${LIBELLES_STATUT[st]}, OV ${j.ov}, ${j.age} ans) : <b>${fmtArgent(min)}</b>${noteEch}`;
+    let sal = parseArgent(inSal.value);
+    if (clamper || sal === null || sal < min){
+      if (sal === null || sal < min) sal = min;
+      inSal.value = fmtArgent(sal);
+    }
+    // aperçu : masse recalculée en incluant cette prolongation
+    const simule = {...litResignatures()};
+    simule[cle] = {statut: st, duree: +selDuree.value, salaire: sal};
+    const {masse, cap} = calculerMasse(simule);
+    const depasse = masse > cap;
+    divImpact.classList.toggle('alerte', depasse);
+    divImpact.innerHTML =
+      `Masse projetée : <b>${fmtArgent(masse)}</b><br>`
+      + `Plafond ${fmtArgent(cap)} · ${depasse ? 'dépassement de <b>'+fmtArgent(masse-cap)+'</b>' : 'marge <b>'+fmtArgent(cap-masse)+'</b>'}<br>`
+      + `Contrat : ${selDuree.value} an${+selDuree.value>1?'s':''} × ${fmtArgent(sal)}`;
+    return sal;
+  };
+
+  selStatut.onchange = ()=>{ remplirDurees(selDuree, selStatut.value, +selDuree.value); rafraichir(true); };
+  selDuree.onchange  = ()=> rafraichir(true);   // le minimum dépend de la durée (règle RFA)
+  inSal.onchange     = ()=> rafraichir(true);
+  inSal.onblur       = ()=> rafraichir(true);
+
+  btnOk.onclick = ()=>{
+    const sal = rafraichir(true);
+    const r = litResignatures();
+    r[cle] = {statut: selStatut.value, duree: +selDuree.value, salaire: sal};
+    ecritResignatures(r);
+    fermerProlongation();
+    rendreAlignement();
+  };
+  btnRetirer.onclick = ()=>{
+    const r = litResignatures();
+    delete r[cle];
+    ecritResignatures(r);
+    fermerProlongation();
+    rendreAlignement();
+  };
+
+  rafraichir(false);
+  el.hidden = false;
+  inSal.focus();
 }
 
 /* ---------- Production ---------- */
@@ -1882,6 +2218,9 @@ if (typeof window !== 'undefined'){
     normaliserNom, seuilsPour, seuilsMatrice, statutSelonSeuils, valeurStat, calculerPmRangs,
     modA, convertirJet, fourchetteRecote, modsEstime, matchsEquipe, xtraEstArchive, productionDe, ETAT,
     extraireFiche, validerPageEquipe, CONFIG,
+    CHARTE_SALAIRE, salaireMinimum, statutResignature, cleCharte, dureeMaxCharte,
+    fmtArgentCourt, parseArgent, litResignatures, ecritResignatures,
+    ouvrirProlongation, fermerProlongation, calculerMasse, PLAFOND, echelonEffectif,
     MATRICES, STATS_PAR_MATRICE, NIVEAUX, SECOURS_ROSTER, SECOURS_Y21, PROFILS, STATS_DEF};
 }
 </script>
