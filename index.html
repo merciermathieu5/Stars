@@ -131,6 +131,59 @@
     font-size:.72rem; color:var(--txt-dim); background:var(--panel); border:1px solid var(--line); padding:5px 10px; border-radius:14px;}
   .compo-retires button{background:none; border:none; color:var(--teal-bright); cursor:pointer; font-size:.7rem; padding:0;}
   .compo-retires button:hover{color:var(--orange-bright);}
+  /* ---------- Feuille d'alignement : tuiles de joueurs ---------- */
+  .trios-outils{display:flex; gap:10px; margin:12px 0 16px; flex-wrap:wrap;}
+  .trios-colonnes{display:grid; grid-template-columns:1fr; gap:16px; align-items:start;}
+  @media(min-width:1080px){ .trios-colonnes{grid-template-columns:1fr 1fr;} }
+  .uni-bloc{background:var(--panel); border:1px solid var(--line); margin-bottom:16px;}
+  .uni-bloc:last-child{margin-bottom:0;}
+  .uni-titre{display:flex; justify-content:space-between; align-items:baseline; gap:10px;
+    padding:9px 14px; border-bottom:1px solid var(--line); color:var(--teal-bright);
+    font-size:.7rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:700;}
+  .uni-titre small{color:#8fa6a9; letter-spacing:.5px; text-transform:none; font-weight:400; font-size:.62rem;}
+  .dfo-ligne{display:flex; align-items:stretch; gap:8px; padding:8px 12px;
+    border-bottom:1px solid rgba(255,255,255,.05);}
+  .dfo-ligne:last-child{border-bottom:none;}
+  .dfo-ligne .ur-lbl{width:46px; flex:none; align-self:center; font-family:var(--font-data);
+    font-size:.62rem; text-transform:uppercase; letter-spacing:.5px; color:#8fa6a9;}
+  .uni-entete{padding:8px 12px 2px; border-bottom:none;}
+  .uni-entete .ur-col{flex:1; font-size:.58rem; letter-spacing:1px; text-transform:uppercase;
+    color:var(--orange-bright); text-align:center;}
+  .tuile{flex:1; min-width:0; background:var(--ink); border:1px solid var(--line); padding:7px 4px 6px;
+    cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px;
+    font-family:var(--font-data); color:inherit; transition:border-color .12s, transform .12s;}
+  .tuile:hover{border-color:var(--teal-bright); transform:translateY(-1px);}
+  .tuile svg.chandail{width:min(84px,100%); height:auto; display:block;
+    filter:drop-shadow(0 2px 3px rgba(0,0,0,.45));}
+  .tuile .tu-info{font-size:.6rem; color:#8fa6a9; letter-spacing:.5px;}
+  .tuile.vide{border-style:dashed; color:#8fa6a9;}
+  .tuile.vide:hover{border-color:var(--orange); color:var(--orange-bright);}
+  .tuile.vide svg.chandail{filter:none; opacity:.8;}
+  .tuile.horscompo{border-color:var(--bad);}
+  .tuile.horscompo .tu-info{color:var(--bad);}
+  .banc-bloc{margin-bottom:16px;}
+  #bancJoueurs{display:flex; flex-wrap:wrap; gap:8px; padding:10px 12px; min-height:56px;}
+  #bancJoueurs.survol{outline:2px dashed var(--orange); outline-offset:-4px;}
+  .banc-joueur{cursor:grab; user-select:none; background:var(--ink); border:1px solid var(--line);
+    padding:5px 10px; font-family:var(--font-data); font-size:.73rem; letter-spacing:.3px;
+    transition:border-color .12s;}
+  .banc-joueur b{color:var(--teal-bright); font-weight:700;}
+  .banc-joueur:hover{border-color:var(--teal-bright);}
+  .banc-joueur:active{cursor:grabbing;}
+  .banc-joueur.utilise{opacity:.45;}
+  .tuile[draggable="true"]{cursor:grab;}
+  .tuile.survol{border-color:var(--orange); background:rgba(255,255,255,.05);}
+  .choix-liste{max-height:min(58vh,420px); overflow:auto; padding:8px 12px 14px;}
+  .choix-joueur{display:flex; justify-content:space-between; align-items:baseline; gap:10px; width:100%;
+    text-align:left; background:none; border:none; border-bottom:1px solid rgba(255,255,255,.06);
+    padding:9px 8px; color:inherit; cursor:pointer; font-family:var(--font-data); font-size:.8rem;}
+  .choix-joueur:hover{background:rgba(255,255,255,.06);}
+  .choix-joueur .cj-meta{color:#8fa6a9; font-size:.66rem; flex:none; letter-spacing:.5px;}
+  .choix-joueur.liberer{color:var(--orange-bright); border-bottom:1px solid var(--line);}
+  #triosValidation{margin:14px 0 18px;}
+  #triosValidation .tv-erreur{color:var(--bad); font-size:.75rem; margin:5px 0;}
+  #triosValidation .tv-avert{color:var(--orange-bright); font-size:.75rem; margin:5px 0;}
+  #triosValidation .tv-ok{color:#79d27a; font-size:.78rem; margin:5px 0;}
   .btn-retirer{font-family:var(--font-data); font-size:.62rem; padding:4px 9px; cursor:pointer; background:transparent;
     color:var(--bad); border:1px solid var(--bad); border-radius:3px;}
   .btn-retirer:hover{background:var(--bad); color:#fff;}
@@ -142,6 +195,47 @@
   .stat-carte.complet{border-left:3px solid #3f9d4f;}
   .ha-titre{margin:26px 0 4px; font-size:.8rem; text-transform:uppercase; letter-spacing:1.5px; color:var(--teal-bright);}
   .ha-note{margin:0 0 10px; font-size:.7rem; color:var(--txt-faint); max-width:70ch;}
+
+  /* ---------- Vue Charte salariale ---------- */
+  .cs-panneau{background:var(--panel); border:1px solid var(--line); padding:18px 20px; margin-bottom:18px;}
+  .cs-ligne{display:flex; gap:18px; flex-wrap:wrap; align-items:flex-end; margin-bottom:14px;}
+  .cs-ligne label{display:flex; flex-direction:column; gap:5px; font-size:.7rem; text-transform:uppercase; letter-spacing:1px; color:var(--txt-faint);}
+  .cs-ligne select{background:var(--teal-deep); border:1px solid var(--line); color:var(--txt); font-family:var(--font-data);
+    font-size:.85rem; padding:7px 10px; min-width:200px;}
+  .cs-ligne select:focus{outline:none; border-color:var(--orange);}
+  .cs-fiche{display:flex; gap:26px; flex-wrap:wrap; margin-bottom:14px; font-family:var(--font-data); font-size:.85rem;}
+  .cs-fiche .cs-champ{display:flex; flex-direction:column; gap:3px;}
+  .cs-fiche .cs-champ .lib{font-size:.64rem; text-transform:uppercase; letter-spacing:1.5px; color:var(--txt-faint);}
+  .cs-fiche .cs-champ .val{font-size:1.05rem; color:var(--txt);}
+  .cs-verdict{display:inline-block; padding:6px 14px; font-size:.8rem; letter-spacing:1px; text-transform:uppercase; font-weight:700;}
+  .cs-verdict.charte{background:var(--teal); color:#fff;}
+  .cs-verdict.surpaye{background:var(--bad); color:#fff;}
+  .cs-verdict.aubaine{background:var(--orange); color:#fff;}
+  .cs-verdict.indef{background:transparent; border:1px solid var(--txt-faint); color:var(--txt-faint);}
+  .cs-note{font-size:.78rem; color:var(--txt-dim); margin-top:10px; line-height:1.45;}
+  .cs-tableau-cadre{overflow-x:auto;}
+  table.cs-tableau{border-collapse:collapse; width:100%; font-family:var(--font-data); font-size:.8rem;}
+  table.cs-tableau th, table.cs-tableau td{border:1px solid var(--line); padding:5px 9px; text-align:right; white-space:nowrap;}
+  table.cs-tableau th{text-align:center; font-size:.66rem; text-transform:uppercase; letter-spacing:1px;}
+  table.cs-tableau th.cs-ov, table.cs-tableau td.cs-ov{text-align:center; color:var(--txt-dim); background:var(--panel2); font-weight:700;}
+  table.cs-tableau th.g-rfa{background:#1d5c31; color:#dff5e4;}
+  table.cs-tableau th.g-ufa{background:#174b78; color:#ddecfb;}
+  table.cs-tableau th.g-ufar2{background:#6e2b68; color:#f6ddf3;}
+  table.cs-tableau th.g-sans{background:#7a3c05; color:#ffe8d1;}
+  table.cs-tableau td{color:var(--txt);}
+  table.cs-tableau td.cs-actif{background:var(--teal); color:#fff; font-weight:700; outline:2px solid var(--orange); outline-offset:-2px;}
+  table.cs-tableau tr.cs-rang-actif td{background:rgba(0,160,172,.12);}
+  table.cs-tableau tr.cs-rang-actif td.cs-actif{background:var(--teal);}
+  table.cs-apercu{border-collapse:collapse; width:100%; font-family:var(--font-data); font-size:.8rem;}
+  table.cs-apercu th, table.cs-apercu td{border-bottom:1px solid var(--line); padding:6px 10px; text-align:left; white-space:nowrap;}
+  table.cs-apercu th{font-size:.64rem; text-transform:uppercase; letter-spacing:1.2px; color:var(--txt-faint); cursor:default;}
+  table.cs-apercu td.num, table.cs-apercu th.num{text-align:right;}
+  table.cs-apercu .mini{display:inline-block; padding:2px 8px; font-size:.66rem; letter-spacing:.8px; text-transform:uppercase; font-weight:700;}
+  table.cs-apercu .mini.charte{background:var(--teal); color:#fff;}
+  table.cs-apercu .mini.surpaye{background:var(--bad); color:#fff;}
+  table.cs-apercu .mini.aubaine{background:var(--orange); color:#fff;}
+  table.cs-apercu td.dim{color:var(--txt-faint);}
+
 
   /* ---------- Fenêtre Prolongation de contrat ---------- */
   .modal-fond{position:fixed; inset:0; background:rgba(0,0,0,.72); display:flex; align-items:center; justify-content:center;
@@ -293,9 +387,11 @@
 <nav>
   <button class="actif" data-vue="alignement">Alignement</button>
   <button data-vue="composition">Composition</button>
+  <button data-vue="trios">Trios</button>
   <button data-vue="production">Production</button>
   <button data-vue="progression">Progression</button>
   <button data-vue="ovdetail">OV détaillé</button>
+  <button data-vue="charte">Charte salariale</button>
   <button data-vue="reglages">Réglages</button>
   <div class="maj-zone">
     <button id="btnMaj">Actualiser depuis ushl.ca</button>
@@ -342,6 +438,82 @@
     <div id="compoRetires" style="display:none">
       <h3 class="ha-titre">Retirés (transigés ailleurs)</h3>
       <div id="compoRetiresListe" class="compo-retires"></div>
+    </div>
+  </section>
+
+  <!-- ================= FEUILLE D'ALIGNEMENT ================= -->
+  <section class="vue" id="vue-trios">
+    <h2>Feuille d'alignement</h2>
+    <p class="ha-note">Clique une tuile pour y placer un joueur de la <strong>Composition</strong> (règlements 1.1.1 et 1.1.2) :
+    positions libres pour les patineurs, gardiens au filet; double quart à 5c5 seulement entre la 4<sup>e</sup> ligne
+    et l'une des trois premières; sur les unités spéciales, positions sans importance mais jamais
+    sur les <strong>2 vagues</strong> d'un même groupe; alignement complet = <strong>20 habillés</strong>.</p>
+    <div class="trios-outils">
+      <button id="btnTriosProposer" class="btn-prolong">Proposer un alignement (par OV)</button>
+      <button id="btnTriosVider">Vider</button>
+    </div>
+    <div id="triosSommaire" class="sommaire"></div>
+    <div id="triosValidation"></div>
+    <div class="uni-bloc banc-bloc">
+      <div class="uni-titre">Banc des joueurs <small>glisse un chandail sur une case · reprends-le du banc pour un double quart ou une unité spéciale · redépose une tuile ici pour libérer sa case</small></div>
+      <div id="bancJoueurs"></div>
+    </div>
+    <div class="trios-colonnes">
+    <div>
+      <div class="uni-bloc">
+      <div class="uni-titre">Attaque <small>4 trios — colonnes AG · C · AD indicatives</small></div>
+      <div class="dfo-ligne uni-entete"><div class="ur-lbl"></div><div class="ur-col">AG</div><div class="ur-col">C</div><div class="ur-col">AD</div></div>
+      <div class="dfo-ligne"><div class="ur-lbl">T1</div><button type="button" class="tuile" data-zone="trio" data-i="0" data-k="0"></button><button type="button" class="tuile" data-zone="trio" data-i="0" data-k="1"></button><button type="button" class="tuile" data-zone="trio" data-i="0" data-k="2"></button></div>
+      <div class="dfo-ligne"><div class="ur-lbl">T2</div><button type="button" class="tuile" data-zone="trio" data-i="1" data-k="0"></button><button type="button" class="tuile" data-zone="trio" data-i="1" data-k="1"></button><button type="button" class="tuile" data-zone="trio" data-i="1" data-k="2"></button></div>
+      <div class="dfo-ligne"><div class="ur-lbl">T3</div><button type="button" class="tuile" data-zone="trio" data-i="2" data-k="0"></button><button type="button" class="tuile" data-zone="trio" data-i="2" data-k="1"></button><button type="button" class="tuile" data-zone="trio" data-i="2" data-k="2"></button></div>
+      <div class="dfo-ligne"><div class="ur-lbl">T4</div><button type="button" class="tuile" data-zone="trio" data-i="3" data-k="0"></button><button type="button" class="tuile" data-zone="trio" data-i="3" data-k="1"></button><button type="button" class="tuile" data-zone="trio" data-i="3" data-k="2"></button></div>
+      </div>
+    </div>
+    <div>
+      <div class="uni-bloc">
+      <div class="uni-titre">Défense <small>3 duos</small></div>
+      <div class="dfo-ligne"><div class="ur-lbl">D1</div><button type="button" class="tuile" data-zone="duo" data-i="0" data-k="0"></button><button type="button" class="tuile" data-zone="duo" data-i="0" data-k="1"></button></div>
+      <div class="dfo-ligne"><div class="ur-lbl">D2</div><button type="button" class="tuile" data-zone="duo" data-i="1" data-k="0"></button><button type="button" class="tuile" data-zone="duo" data-i="1" data-k="1"></button></div>
+      <div class="dfo-ligne"><div class="ur-lbl">D3</div><button type="button" class="tuile" data-zone="duo" data-i="2" data-k="0"></button><button type="button" class="tuile" data-zone="duo" data-i="2" data-k="1"></button></div>
+      </div>
+      <div class="uni-bloc">
+      <div class="uni-titre">Gardiens</div>
+      <div class="dfo-ligne"><div class="ur-lbl">Part.</div><button type="button" class="tuile" data-zone="g" data-i="0" data-k="0"></button></div>
+      <div class="dfo-ligne"><div class="ur-lbl">Subst.</div><button type="button" class="tuile" data-zone="g" data-i="0" data-k="1"></button></div>
+      </div>
+    </div>
+    </div>
+    <div class="trios-colonnes" id="uniteSpeciales">
+    <div>
+      <div class="uni-bloc">
+      <div class="uni-titre">Avantage numérique à 5 <small>2 vagues de 5 — positions libres</small></div>
+      <div class="dfo-ligne"><div class="ur-lbl">V1</div><button type="button" class="tuile" data-zone="an5" data-i="0" data-k="0"></button><button type="button" class="tuile" data-zone="an5" data-i="0" data-k="1"></button><button type="button" class="tuile" data-zone="an5" data-i="0" data-k="2"></button><button type="button" class="tuile" data-zone="an5" data-i="0" data-k="3"></button><button type="button" class="tuile" data-zone="an5" data-i="0" data-k="4"></button></div>
+      <div class="dfo-ligne"><div class="ur-lbl">V2</div><button type="button" class="tuile" data-zone="an5" data-i="1" data-k="0"></button><button type="button" class="tuile" data-zone="an5" data-i="1" data-k="1"></button><button type="button" class="tuile" data-zone="an5" data-i="1" data-k="2"></button><button type="button" class="tuile" data-zone="an5" data-i="1" data-k="3"></button><button type="button" class="tuile" data-zone="an5" data-i="1" data-k="4"></button></div>
+      </div>
+      <div class="uni-bloc">
+      <div class="uni-titre">Avantage numérique à 4 <small>2 vagues de 4 — positions libres</small></div>
+      <div class="dfo-ligne"><div class="ur-lbl">V1</div><button type="button" class="tuile" data-zone="an4" data-i="0" data-k="0"></button><button type="button" class="tuile" data-zone="an4" data-i="0" data-k="1"></button><button type="button" class="tuile" data-zone="an4" data-i="0" data-k="2"></button><button type="button" class="tuile" data-zone="an4" data-i="0" data-k="3"></button></div>
+      <div class="dfo-ligne"><div class="ur-lbl">V2</div><button type="button" class="tuile" data-zone="an4" data-i="1" data-k="0"></button><button type="button" class="tuile" data-zone="an4" data-i="1" data-k="1"></button><button type="button" class="tuile" data-zone="an4" data-i="1" data-k="2"></button><button type="button" class="tuile" data-zone="an4" data-i="1" data-k="3"></button></div>
+      </div>
+    </div>
+    <div>
+      <div class="uni-bloc">
+      <div class="uni-titre">Infériorité numérique à 4 <small>2 vagues de 4 — positions libres</small></div>
+      <div class="dfo-ligne"><div class="ur-lbl">V1</div><button type="button" class="tuile" data-zone="in4" data-i="0" data-k="0"></button><button type="button" class="tuile" data-zone="in4" data-i="0" data-k="1"></button><button type="button" class="tuile" data-zone="in4" data-i="0" data-k="2"></button><button type="button" class="tuile" data-zone="in4" data-i="0" data-k="3"></button></div>
+      <div class="dfo-ligne"><div class="ur-lbl">V2</div><button type="button" class="tuile" data-zone="in4" data-i="1" data-k="0"></button><button type="button" class="tuile" data-zone="in4" data-i="1" data-k="1"></button><button type="button" class="tuile" data-zone="in4" data-i="1" data-k="2"></button><button type="button" class="tuile" data-zone="in4" data-i="1" data-k="3"></button></div>
+      </div>
+      <div class="uni-bloc">
+      <div class="uni-titre">Infériorité numérique à 3 <small>2 vagues de 3 — positions libres</small></div>
+      <div class="dfo-ligne"><div class="ur-lbl">V1</div><button type="button" class="tuile" data-zone="in3" data-i="0" data-k="0"></button><button type="button" class="tuile" data-zone="in3" data-i="0" data-k="1"></button><button type="button" class="tuile" data-zone="in3" data-i="0" data-k="2"></button></div>
+      <div class="dfo-ligne"><div class="ur-lbl">V2</div><button type="button" class="tuile" data-zone="in3" data-i="1" data-k="0"></button><button type="button" class="tuile" data-zone="in3" data-i="1" data-k="1"></button><button type="button" class="tuile" data-zone="in3" data-i="1" data-k="2"></button></div>
+      </div>
+    </div>
+    </div>
+    <div class="modal-fond" id="tuileModalFond" hidden>
+      <div class="modal" style="width:min(430px,94vw)">
+        <div class="modal-tete"><h3 id="tuileModalTitre">Choisir un joueur</h3><button class="modal-x" id="tuileModalX" type="button">×</button></div>
+        <div class="choix-liste" id="tuileModalListe"></div>
+      </div>
     </div>
   </section>
 
@@ -393,6 +565,44 @@
   </section>
 
   <!-- ================= RÉGLAGES ================= -->
+  <section class="vue" id="vue-charte">
+    <h2>Charte salariale officielle Y22</h2>
+    <div class="h2-sous">Salaires minimums selon l'OV, le statut et l'âge — cap salarial à 104 M$. Sélectionne un joueur de l'alignement pour situer son contrat sur la charte : la cellule applicable s'allume dans le tableau et le verdict s'affiche (Sur la charte, Surpayé ou Aubaine salariale).</div>
+
+    <div class="cs-panneau">
+      <div class="cs-ligne">
+        <label>Joueur de l'alignement
+          <select id="csJoueur"><option value="">— choisir un joueur —</option></select>
+        </label>
+        <label>Charte applicable
+          <select id="csStatut">
+            <option value="RFA">RFA — 6.4.1 (1 à 7 ans)</option>
+            <option value="UFA">UFA — 6.4.2 (1 à 4 ans)</option>
+            <option value="UFAR2">UFA Ronde 2 — 6.4.3 (1 à 2 ans)</option>
+            <option value="SANS">Joueur sans contrat — 6.4.4 (1 an)</option>
+          </select>
+        </label>
+        <label>Durée signée
+          <select id="csDuree"></select>
+        </label>
+      </div>
+      <div class="cs-fiche" id="csFiche"></div>
+      <div><span class="cs-verdict indef" id="csVerdict">Aucun joueur sélectionné</span></div>
+      <div class="cs-note" id="csNote">La charte applicable est proposée d'après l'âge (28 ans et moins → RFA, 29 ans et plus → UFA) et reste modifiable. N.B. : les gardiens peuvent signer à une valeur d'un échelon plus bas que leur overall, peu importe la charte utilisée. Pour les RFA, chaque année de contrat au-delà de 3 monte l'échelon de 1.</div>
+    </div>
+
+    <div class="cs-panneau">
+      <h3 class="ha-titre">Charte des salaires minimums (en milliers de dollars)</h3>
+      <div class="cs-tableau-cadre" id="csTableau"></div>
+    </div>
+
+    <div class="cs-panneau">
+      <h3 class="ha-titre">Alignement face à la charte</h3>
+      <p class="ha-note">Lecture rapide de chaque contrat au statut présumé selon l'âge, sur une durée de référence de 1 an (sans bonus d'échelon RFA). Utilise le sélecteur ci-dessus pour raffiner un cas particulier. Les gardiens sont évalués à l'échelon inférieur (OV −1).</p>
+      <div class="cs-tableau-cadre" id="csApercu"></div>
+    </div>
+  </section>
+
   <section class="vue" id="vue-reglages">
     <h2>Réglages</h2>
     <div class="h2-sous">Matrices d'attentes, sauvegarde et sources de données</div>
@@ -477,7 +687,8 @@ const CLES_LS = {
   proxy: 'dal_proxy_prefere_v1',
   cache: 'dal_cache_v1',
   resign: 'dal_resignatures_v1',
-  compo: 'dal_compo_v1'
+  compo: 'dal_compo_v1',
+  trios: 'dal_trios_v1'
 };
 
 /* ------------------ DÉFINITION DES STATS ------------------ */
@@ -1700,7 +1911,7 @@ const CHARTE_SALAIRE = {
   UFAR2_34:         [  900,  900,  950, 1150, 1500, 2500, 3500, 5000, 6250,  7500,  8750, 10250, 12000, 13500],
   UFAR2_35:         [  900,  900,  900, 1000, 1100, 1750, 2250, 3250, 4250,  5000,  6000,  7250,  8750, 10000],
   SANS_34:          [  900,  900,  900,  950, 1150, 1500, 2500, 3500, 5000,  6250,  7500,  8750, 10250, 12000],
-  SANS_35:          [  900,  900,  900, 1000, 1000, 1100, 1750, 2250, 3250,  4250,  5000,  6000,  7250,  9000]
+  SANS_35:          [  900,  900,  900,  900, 1000, 1100, 1750, 2250, 3250,  4250,  5000,  6000,  7250,  8750]
 };
 
 /* Statut de re-signature déduit de l'âge (règle simple retenue) :
@@ -2212,6 +2423,416 @@ function attacherFormulaireCompo(){
   });
 }
 
+/* ---------- Feuille d'alignement (règlements 1.1.1 et 1.1.2) ---------- */
+/* 4 trios, 3 duos, 2 gardiens + unités spéciales (AN à 5 et à 4, IN à 4 et
+   à 3, 2 vagues chacune), bâtis à partir des joueurs de la Composition.
+   Art. 1.1.1 : un joueur peut évoluer à une autre position que la sienne,
+   sauf les gardiens; alignement complet = 20 habillés. Art. 1.1.2 : double
+   quart à 5c5 permis uniquement entre la 4e ligne et l'une des trois
+   premières; sur les unités spéciales les positions sont libres, mais un
+   joueur ne peut pas jouer sur les 2 vagues d'un même groupe. */
+const GROUPES_SPECIAUX = [
+  {zone:'an5', nom:'Avantage numérique à 5', n:5},
+  {zone:'an4', nom:'Avantage numérique à 4', n:4},
+  {zone:'in4', nom:'Infériorité numérique à 4', n:4},
+  {zone:'in3', nom:'Infériorité numérique à 3', n:3}
+];
+const TRIOS_VIDES = () => ({
+  trios: [['','',''],['','',''],['','',''],['','','']],
+  duos: [['',''],['',''],['','']],
+  gardiens: ['',''],
+  an5: [['','','','',''],['','','','','']],
+  an4: [['','','',''],['','','','']],
+  in4: [['','','',''],['','','','']],
+  in3: [['',''],['','']].map(v=>[...v,'']) // 2 vagues de 3
+});
+function normaliserSelTrios(o){
+  const v = TRIOS_VIDES();
+  if (!o) return v;
+  for (let i=0;i<4;i++) for (let k=0;k<3;k++) v.trios[i][k] = (o.trios?.[i]?.[k]) || '';
+  for (let i=0;i<3;i++) for (let k=0;k<2;k++) v.duos[i][k] = (o.duos?.[i]?.[k]) || '';
+  for (let k=0;k<2;k++) v.gardiens[k] = (o.gardiens?.[k]) || '';
+  for (const g of GROUPES_SPECIAUX)
+    for (let i=0;i<2;i++) for (let k=0;k<g.n;k++) v[g.zone][i][k] = (o[g.zone]?.[i]?.[k]) || '';
+  return v;
+}
+function litTrios(){
+  try { return normaliserSelTrios(JSON.parse(localStorage.getItem(CLES_LS.trios) || 'null')); }
+  catch { return TRIOS_VIDES(); }
+}
+function ecritTrios(sel){ localStorage.setItem(CLES_LS.trios, JSON.stringify(sel)); }
+
+function validerAlignementTrios(brut, pool){
+  const sel = normaliserSelTrios(brut);
+  const erreurs = [], avertissements = [];
+  const parCle = new Map(pool.map(j=>[normaliserNom(j.nom), j]));
+  const info = nom => parCle.get(normaliserNom(nom)) || null;
+
+  const casesF = sel.trios.flat(), casesD = sel.duos.flat(), casesG = sel.gardiens;
+  const casesES = [...casesF, ...casesD, ...casesG];
+  const casesSpec = GROUPES_SPECIAUX.flatMap(g=>sel[g.zone].flat());
+  const nbRemplis = casesES.filter(Boolean).length;
+  const habilles = new Set(casesES.filter(Boolean).map(normaliserNom));
+  const specRemplis = casesSpec.filter(Boolean).length;
+
+  for (const nom of new Set([...casesES, ...casesSpec].filter(Boolean)))
+    if (!info(nom)) avertissements.push(`${nom} n'est plus dans la composition — remplace-le.`);
+
+  // Gardiens : seuls des gardiens au filet, jamais ailleurs, partant ≠ substitut
+  for (const nom of casesG.filter(Boolean)){
+    const j = info(nom);
+    if (j && j.po !== 'G') erreurs.push(`${nom} n'est pas un gardien : la position des gardiens ne change pas (art. 1.1.1).`);
+  }
+  if (casesG[0] && casesG[1] && normaliserNom(casesG[0]) === normaliserNom(casesG[1]))
+    erreurs.push('Le partant et le substitut doivent être deux gardiens différents.');
+  for (const nom of [...casesF, ...casesD, ...casesSpec].filter(Boolean)){
+    const j = info(nom);
+    if (j && j.po === 'G') erreurs.push(`${nom} est un gardien : il ne peut pas occuper une case de patineur (art. 1.1.1).`);
+  }
+
+  // Même joueur deux fois dans une même unité
+  const dupDans = (liste)=>{ const r = liste.filter(Boolean).map(normaliserNom); return new Set(r).size !== r.length; };
+  sel.trios.forEach((t,i)=>{ if (dupDans(t)) erreurs.push(`Trio ${i+1} : le même joueur y figure deux fois.`); });
+  sel.duos.forEach((d,i)=>{ if (dupDans(d)) erreurs.push(`Duo ${i+1} : le même joueur y figure deux fois.`); });
+
+  // Double quart à 5c5 : uniquement 1-4, 2-4 ou 3-4 (art. 1.1.2)
+  const parTrio = new Map();
+  sel.trios.forEach((t,i)=> new Set(t.filter(Boolean).map(normaliserNom)).forEach(c=>{
+    if (!parTrio.has(c)) parTrio.set(c, []);
+    parTrio.get(c).push(i);
+  }));
+  for (const [cle, idx] of parTrio){
+    if (idx.length === 1) continue;
+    const nom = info(cle)?.nom || sel.trios[idx[0]].find(n=>n && normaliserNom(n)===cle) || cle;
+    if (idx.length > 2)
+      erreurs.push(`${nom} figure dans ${idx.length} trios : le double quart se limite à deux lignes (art. 1.1.2).`);
+    else if (!idx.includes(3))
+      erreurs.push(`${nom} double sur les trios ${idx[0]+1} et ${idx[1]+1} : seules les combinaisons 1-4, 2-4 et 3-4 sont permises (art. 1.1.2).`);
+  }
+  // Duos : avec 3 duos, aucune combinaison «avec la 4e ligne» n'existe → un seul duo par défenseur
+  const parDuo = new Map();
+  sel.duos.forEach((d,i)=> new Set(d.filter(Boolean).map(normaliserNom)).forEach(c=>{
+    if (!parDuo.has(c)) parDuo.set(c, []);
+    parDuo.get(c).push(i);
+  }));
+  for (const [cle, idx] of parDuo)
+    if (idx.length > 1)
+      erreurs.push(`${info(cle)?.nom || cle} figure dans ${idx.length} duos : l'art. 1.1.2 ne permet le double quart qu'avec une 4e ligne — une seule paire par joueur.`);
+
+  // À la fois en attaque et en défense à 5c5 : non couvert par les combinaisons permises
+  const clesF = new Set(casesF.filter(Boolean).map(normaliserNom));
+  for (const cle of new Set(casesD.filter(Boolean).map(normaliserNom)))
+    if (clesF.has(cle))
+      avertissements.push(`${info(cle)?.nom || cle} est utilisé en attaque ET en défense — combinaison non couverte par l'art. 1.1.2, à valider avec la ligue.`);
+
+  // Unités spéciales : positions libres, mais jamais sur les 2 vagues d'un même groupe
+  for (const g of GROUPES_SPECIAUX){
+    sel[g.zone].forEach((vague,i)=>{
+      if (dupDans(vague)) erreurs.push(`${g.nom}, vague ${i+1} : le même joueur y figure deux fois.`);
+    });
+    const v1 = new Set(sel[g.zone][0].filter(Boolean).map(normaliserNom));
+    for (const nom of sel[g.zone][1].filter(Boolean))
+      if (v1.has(normaliserNom(nom)))
+        erreurs.push(`${info(nom)?.nom || nom} est sur les 2 vagues de l'${g.nom.toLowerCase()} : interdit (art. 1.1.2).`);
+    for (const nom of new Set(sel[g.zone].flat().filter(Boolean).map(normaliserNom)))
+      if (!habilles.has(nom) && info(nom))
+        avertissements.push(`${info(nom).nom} est sur l'${g.nom.toLowerCase()} sans être parmi les habillés du 5 contre 5.`);
+  }
+
+  // Hors position naturelle à 5c5 : permis (art. 1.1.1), simple décompte informatif
+  let horsPosition = 0;
+  for (const nom of casesF.filter(Boolean)){ const j = info(nom); if (j && j.po === 'D') horsPosition++; }
+  for (const nom of casesD.filter(Boolean)){ const j = info(nom); if (j && EST_ATTAQUANT(j.po)) horsPosition++; }
+
+  if (nbRemplis === casesES.length && habilles.size < 20 && !erreurs.length)
+    avertissements.push(`Double quart utilisé : ${habilles.size} joueurs distincts occupent les 20 cases — l'envoi à la ligue doit tout de même compter 20 habillés (art. 1.1.1).`);
+
+  return {erreurs, avertissements, nbRemplis, nbCases: casesES.length,
+          nbDistincts: habilles.size, horsPosition,
+          specRemplis, specCases: casesSpec.length};
+}
+
+const CASE_LIBELLES = {
+  trio: (i,k)=>`Trio ${i+1} — case ${['AG','C','AD'][k]}`,
+  duo: (i,k)=>`Duo ${i+1}`,
+  g: (i,k)=> k===0 ? 'Gardien partant' : 'Gardien substitut',
+  an5: (i,k)=>`Avantage numérique à 5 — vague ${i+1}`,
+  an4: (i,k)=>`Avantage numérique à 4 — vague ${i+1}`,
+  in4: (i,k)=>`Infériorité numérique à 4 — vague ${i+1}`,
+  in3: (i,k)=>`Infériorité numérique à 3 — vague ${i+1}`
+};
+function cleZoneTrios(zone){ return zone==='trio' ? 'trios' : zone==='duo' ? 'duos' : zone; }
+function valeurCaseTrios(sel, zone, i, k){
+  return zone==='g' ? sel.gardiens[k] : sel[cleZoneTrios(zone)][i][k];
+}
+function usagesES(sel){
+  const u = new Map();
+  const noter = (nom, tag)=>{ if (!nom) return; const c = normaliserNom(nom);
+    if (!u.has(c)) u.set(c, []); u.get(c).push(tag); };
+  sel.trios.forEach((t,i)=>t.forEach(n=>noter(n, 'T'+(i+1))));
+  sel.duos.forEach((d,i)=>d.forEach(n=>noter(n, 'D'+(i+1))));
+  sel.gardiens.forEach((n,k)=>noter(n, k===0?'G1':'G2'));
+  return u;
+}
+function nomFamille(nom){
+  return (nom || '').replace(/_/g, ' ').trim().split(/\s+/).pop().toUpperCase();
+}
+/* Chandail vu de dos : couleurs tirées des variables CSS de l'équipe
+   (--teal, --teal-dark, --orange), nom sur l'empiècement, OV en numéro. */
+function svgChandail(nomplaque, numero, estVide){
+  const long = nomplaque.length > 9 ? ` textLength="56" lengthAdjust="spacingAndGlyphs"` : '';
+  const corps = estVide ? '#232b2e' : 'var(--teal)';
+  const emp = estVide ? '#1b2124' : 'var(--teal-dark)';
+  const bande = estVide ? '#39464a' : 'var(--orange)';
+  const encre = estVide ? '#8fa6a9' : '#fff';
+  return `<svg class="chandail" viewBox="0 0 100 88" aria-hidden="true">
+    <path d="M2,26 L18,12 L18,52 L6,56 Z" fill="${corps}"/>
+    <path d="M98,26 L82,12 L82,52 L94,56 Z" fill="${corps}"/>
+    <path d="M4,44 L18,39 L18,46 L5,50 Z" fill="${bande}"/>
+    <path d="M96,44 L82,39 L82,46 L95,50 Z" fill="${bande}"/>
+    <path d="M18,11 Q18,8 22,8 L38,8 Q50,17 62,8 L78,8 Q82,8 82,11 L82,83 Q82,86 78,86 L22,86 Q18,86 18,83 Z" fill="${corps}"/>
+    <path d="M18,11 Q18,8 22,8 L38,8 Q50,17 62,8 L78,8 Q82,8 82,11 L82,25 L18,25 Z" fill="${emp}"/>
+    <path d="M38,8 Q50,18 62,8" fill="none" stroke="${encre}" stroke-width="1.4" opacity=".9"/>
+    <rect x="18" y="75" width="64" height="4.5" fill="${bande}"/>
+    <rect x="18" y="80.5" width="64" height="1.8" fill="${encre}" opacity=".8"/>
+    <text x="50" y="20.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="${encre}"
+      font-family="var(--font-data)" letter-spacing=".5"${long}>${nomplaque}</text>
+    <text x="50" y="66" text-anchor="middle" font-size="${estVide ? 30 : 31}" font-weight="800" fill="${encre}"
+      paint-order="stroke" stroke="${estVide ? 'none' : bande}" stroke-width="1.1"
+      font-family="var(--font-data)">${numero}</text>
+  </svg>`;
+}
+function usagesSpeciaux(sel){
+  const u = new Map();
+  const noter = (nom, tag)=>{ if (!nom) return; const c = normaliserNom(nom);
+    if (!u.has(c)) u.set(c, new Set()); u.get(c).add(tag); };
+  for (const g of GROUPES_SPECIAUX)
+    sel[g.zone].forEach(v=>v.forEach(n=>noter(n, g.zone.startsWith('an') ? 'AN' : 'IN')));
+  return u;
+}
+function rendreBanc(pool, sel){
+  const ordrePo = {C:0, AG:1, AD:2, D:3, G:4};
+  const usES = usagesES(sel), usSpec = usagesSpeciaux(sel);
+  const tri = [...pool].sort((a,b)=> (ordrePo[a.po]??9)-(ordrePo[b.po]??9) || b.ov-a.ov);
+  $('#bancJoueurs').innerHTML = tri.map(j=>{
+    const cle = normaliserNom(j.nom);
+    const tags = [...(usES.get(cle)||[]), ...(usSpec.get(cle)||new Set())];
+    const bulle = `${j.nom} (${j.po} · ${j.ov ?? '—'})${tags.length ? ' — ' + tags.join(' ') : ''}`;
+    return `<div class="banc-joueur${tags.length?' utilise':''}" draggable="true" title="${bulle.replace(/"/g,'&quot;')}"
+      data-nom="${j.nom.replace(/"/g,'&quot;')}">${j.po} - ${j.nom} <b>(${j.ov ?? '—'})</b></div>`;
+  }).join('') || `<div class="tv-avert" style="padding:6px">Aucun joueur — complète d'abord la Composition.</div>`;
+}
+function rendreTrios(){
+  const pool = joueursComposition();
+  const parCle = new Map(pool.map(j=>[normaliserNom(j.nom), j]));
+  const sel = litTrios();
+  rendreBanc(pool, sel);
+  document.querySelectorAll('#vue-trios button.tuile').forEach(t=>{
+    const zone = t.dataset.zone, i = +t.dataset.i, k = +t.dataset.k;
+    const nom = valeurCaseTrios(sel, zone, i, k);
+    const j = nom ? parCle.get(normaliserNom(nom)) : null;
+    t.classList.toggle('vide', !nom);
+    t.classList.toggle('horscompo', !!nom && !j);
+    t.setAttribute('draggable', nom ? 'true' : 'false');
+    if (!nom){
+      t.innerHTML = svgChandail('CHOISIR', '+', true);
+      t.title = CASE_LIBELLES[zone](i,k);
+    } else if (j){
+      t.innerHTML = svgChandail(nomFamille(j.nom), j.ov ?? '—', false)
+        + `<span class="tu-info">${j.po}</span>`;
+      t.title = `${CASE_LIBELLES[zone](i,k)} — ${j.nom} (${j.po} · ${j.ov ?? '—'})`;
+    } else {
+      t.innerHTML = svgChandail(nomFamille(nom), '?', true)
+        + `<span class="tu-info">hors composition</span>`;
+      t.title = `${CASE_LIBELLES[zone](i,k)} — ${nom} (hors composition)`;
+    }
+  });
+  rendreValidationTrios(sel, pool);
+}
+let tuileCible = null;
+function ouvrirChoixTuile(zone, i, k){
+  tuileCible = {zone, i, k};
+  const pool = joueursComposition();
+  const ordrePo = {C:0, AG:1, AD:2, D:3};
+  const liste = zone==='g'
+    ? pool.filter(j=>j.po==='G').sort((a,b)=>b.ov-a.ov)
+    : pool.filter(j=>j.po!=='G').sort((a,b)=> (ordrePo[a.po]??9)-(ordrePo[b.po]??9) || b.ov-a.ov);
+  const sel = litTrios();
+  const usages = usagesES(sel);
+  const actuel = valeurCaseTrios(sel, zone, i, k);
+  $('#tuileModalTitre').textContent = CASE_LIBELLES[zone](i,k);
+  let html = '';
+  if (actuel)
+    html += `<button type="button" class="choix-joueur liberer" data-nom="">Libérer la case (retirer ${actuel})</button>`;
+  for (const j of liste){
+    const tags = usages.get(normaliserNom(j.nom)) || [];
+    html += `<button type="button" class="choix-joueur" data-nom="${j.nom.replace(/"/g,'&quot;')}">`
+      + `<span>${j.nom}</span><span class="cj-meta">${j.po} · ${j.ov ?? '—'}${tags.length ? ' · '+tags.join(' ') : ''}</span></button>`;
+  }
+  if (!liste.length)
+    html += `<div class="tv-avert" style="padding:10px 6px">Aucun ${zone==='g'?'gardien':'patineur'} dans la Composition — complète-la d'abord.</div>`;
+  $('#tuileModalListe').innerHTML = html;
+  $('#tuileModalFond').hidden = false;
+}
+function fermerChoixTuile(){ $('#tuileModalFond').hidden = true; tuileCible = null; }
+function assignerTuile(nom){
+  if (!tuileCible) return;
+  const {zone, i, k} = tuileCible;
+  const sel = litTrios();
+  if (zone === 'g') sel.gardiens[k] = nom;
+  else sel[cleZoneTrios(zone)][i][k] = nom;
+  ecritTrios(sel);
+  fermerChoixTuile();
+  rendreTrios();
+}
+function rendreValidationTrios(sel, pool){
+  const v = validerAlignementTrios(sel, pool);
+  $('#triosSommaire').innerHTML = `
+    <div class="stat-carte ${v.nbRemplis===v.nbCases?'complet':'manque'}"><div class="lbl">5 contre 5</div>
+      <div class="val">${v.nbRemplis}/${v.nbCases}</div>
+      <div class="det">${v.nbRemplis===v.nbCases ? v.nbDistincts+' joueurs distincts habillés' : (v.nbCases-v.nbRemplis)+' case'+(v.nbCases-v.nbRemplis>1?'s':'')+' à remplir'}</div></div>
+    <div class="stat-carte ${v.specRemplis===v.specCases?'complet':'manque'}"><div class="lbl">Unités spéciales</div>
+      <div class="val">${v.specRemplis}/${v.specCases}</div>
+      <div class="det">AN à 5 et à 4 · IN à 4 et à 3</div></div>
+    <div class="stat-carte"><div class="lbl">Hors position</div><div class="val">${v.horsPosition}</div>
+      <div class="det">permis par l'art. 1.1.1</div></div>
+    <div class="stat-carte ${v.erreurs.length?'alerte':''}"><div class="lbl">Infractions</div><div class="val">${v.erreurs.length}</div></div>`;
+  let html = '';
+  for (const e of v.erreurs) html += `<div class="tv-erreur">✗ ${e}</div>`;
+  for (const a of v.avertissements) html += `<div class="tv-avert">△ ${a}</div>`;
+  if (!v.erreurs.length && v.nbRemplis === v.nbCases && v.specRemplis === v.specCases)
+    html += `<div class="tv-ok">✓ Feuille complète et conforme aux articles 1.1.1 et 1.1.2.</div>`;
+  $('#triosValidation').innerHTML = html;
+}
+function proposerTrios(){
+  const pool = joueursComposition();
+  const pris = new Set();
+  const prendre = pred => {
+    const j = pool.filter(x=>!pris.has(x.nom) && x.po!=='G' && (!pred || pred(x)))
+                  .sort((a,b)=>b.ov-a.ov)[0] || null;
+    if (j) pris.add(j.nom);
+    return j ? j.nom : '';
+  };
+  const sel = TRIOS_VIDES();
+  const poParCase = ['AG','C','AD'];
+  // Position naturelle d'abord (meilleur OV disponible, trio 1 vers 4)
+  for (let k=0; k<3; k++)
+    for (let i=0; i<4; i++)
+      sel.trios[i][k] = prendre(x=>x.po===poParCase[k]) || '';
+  // Case d'attaque sans titulaire naturel : un AUTRE ATTAQUANT non utilisé
+  // (jamais un défenseur); s'il n'en reste plus, la case demeure vide.
+  for (let i=0; i<4; i++)
+    for (let k=0; k<3; k++)
+      if (!sel.trios[i][k]) sel.trios[i][k] = prendre(x=>EST_ATTAQUANT(x.po)) || '';
+  // Duos : défenseurs naturels seulement; case vide plutôt qu'un attaquant.
+  for (let i=0; i<3; i++)
+    for (let k=0; k<2; k++)
+      sel.duos[i][k] = prendre(x=>x.po==='D') || '';
+  const g = pool.filter(x=>x.po==='G').sort((a,b)=>b.ov-a.ov);
+  sel.gardiens = [g[0]?.nom || '', g[1]?.nom || ''];
+
+  // Unités spéciales : à même les habillés (positions libres), sans doubler une vague
+  const habilles = new Set([...sel.trios.flat(), ...sel.duos.flat()].filter(Boolean));
+  const dispo = pool.filter(x=>habilles.has(x.nom));
+  const tri = (avant)=>[...dispo].sort((a,b)=>{
+    const pa = avant(a)?0:1, pb = avant(b)?0:1;
+    return pa-pb || b.ov-a.ov;
+  });
+  const remplirGroupe = (zone, n, prio)=>{
+    const ordre = tri(prio);
+    for (let i=0;i<2;i++)
+      for (let k=0;k<n;k++)
+        sel[zone][i][k] = ordre[i*n+k]?.nom || '';
+  };
+  remplirGroupe('an5', 5, x=>EST_ATTAQUANT(x.po));
+  remplirGroupe('an4', 4, x=>EST_ATTAQUANT(x.po));
+  remplirGroupe('in4', 4, x=>x.po==='D');
+  remplirGroupe('in3', 3, x=>x.po==='D');
+  ecritTrios(sel);
+  rendreTrios();
+}
+let dragEtat = null;
+function fixerCaseTrios(sel, zone, i, k, nom){
+  if (zone === 'g') sel.gardiens[k] = nom;
+  else sel[cleZoneTrios(zone)][i][k] = nom;
+}
+function deposerSurTuile(zone, i, k){
+  if (!dragEtat) return;
+  const pool = joueursComposition();
+  const j = pool.find(x=>x.nom===dragEtat.nom);
+  if (zone === 'g' && (!j || j.po !== 'G')){
+    flash('Seul un gardien peut occuper cette case (art. 1.1.1)'); dragEtat = null; return;
+  }
+  if (zone !== 'g' && j && j.po === 'G'){
+    flash('Un gardien reste devant le filet (art. 1.1.1)'); dragEtat = null; return;
+  }
+  const sel = litTrios();
+  const prec = valeurCaseTrios(sel, zone, i, k);
+  fixerCaseTrios(sel, zone, i, k, dragEtat.nom);
+  const o = dragEtat.origine;
+  if (o && !(o.zone===zone && o.i===i && o.k===k))
+    fixerCaseTrios(sel, o.zone, o.i, o.k, (prec && prec !== dragEtat.nom) ? prec : '');
+  ecritTrios(sel);
+  dragEtat = null;
+  rendreTrios();
+}
+function attacherTrios(){
+  const conteneur = $('#vue-trios');
+  conteneur.addEventListener('dragstart', e=>{
+    const b = e.target.closest?.('.banc-joueur');
+    if (b){ dragEtat = {nom: b.dataset.nom, origine: null};
+      try { e.dataTransfer.effectAllowed = 'copyMove'; e.dataTransfer.setData('text/plain', b.dataset.nom); } catch {}
+      return; }
+    const t = e.target.closest?.('button.tuile');
+    if (t){
+      const sel = litTrios();
+      const nom = valeurCaseTrios(sel, t.dataset.zone, +t.dataset.i, +t.dataset.k);
+      if (!nom){ e.preventDefault(); return; }
+      dragEtat = {nom, origine: {zone: t.dataset.zone, i: +t.dataset.i, k: +t.dataset.k}};
+      try { e.dataTransfer.effectAllowed = 'copyMove'; e.dataTransfer.setData('text/plain', nom); } catch {}
+    }
+  });
+  conteneur.addEventListener('dragover', e=>{
+    if (!dragEtat) return;
+    const t = e.target.closest?.('button.tuile');
+    const banc = e.target.closest?.('#bancJoueurs');
+    if (t || (banc && dragEtat.origine)){
+      e.preventDefault();
+      try { e.dataTransfer.dropEffect = dragEtat.origine ? 'move' : 'copy'; } catch {}
+      (t || banc).classList.add('survol');
+    }
+  });
+  conteneur.addEventListener('dragleave', e=>{
+    e.target.closest?.('button.tuile')?.classList.remove('survol');
+    if (!e.target.closest?.('#bancJoueurs')) $('#bancJoueurs').classList.remove('survol');
+  });
+  conteneur.addEventListener('drop', e=>{
+    if (!dragEtat) return;
+    const t = e.target.closest?.('button.tuile');
+    if (t){ e.preventDefault(); deposerSurTuile(t.dataset.zone, +t.dataset.i, +t.dataset.k); return; }
+    if (e.target.closest?.('#bancJoueurs') && dragEtat.origine){
+      e.preventDefault();
+      const sel = litTrios();
+      fixerCaseTrios(sel, dragEtat.origine.zone, dragEtat.origine.i, dragEtat.origine.k, '');
+      ecritTrios(sel); dragEtat = null; rendreTrios();
+    }
+  });
+  conteneur.addEventListener('dragend', ()=>{
+    dragEtat = null;
+    document.querySelectorAll('#vue-trios .survol').forEach(x=>x.classList.remove('survol'));
+  });
+  $('#btnTriosProposer').addEventListener('click', proposerTrios);
+  $('#btnTriosVider').addEventListener('click', ()=>{ ecritTrios(TRIOS_VIDES()); rendreTrios(); });
+  $('#vue-trios').addEventListener('click', e=>{
+    const t = e.target.closest('button.tuile');
+    if (t){ ouvrirChoixTuile(t.dataset.zone, +t.dataset.i, +t.dataset.k); return; }
+    const c = e.target.closest('button.choix-joueur');
+    if (c){ assignerTuile(c.dataset.nom || ''); return; }
+  });
+  $('#tuileModalX').addEventListener('click', fermerChoixTuile);
+  $('#tuileModalFond').addEventListener('click', e=>{ if (e.target === e.currentTarget) fermerChoixTuile(); });
+}
+
 /* ---------- Production ---------- */
 function rendreProduction(){
   const enCours = ETAT.scoring.patineurs.length > 0;
@@ -2431,11 +3052,191 @@ function rendreMatrice(){
   });
 }
 
+/* =====================================================================
+   VUE CHARTE SALARIALE : tableau dynamique et analyse des contrats
+   ===================================================================== */
+/* Colonnes du tableau, dans l'ordre de la charte officielle. */
+const CS_COLONNES = [
+  {cle:'RFA',      groupe:'RFA',   classe:'g-rfa',   age:'28 ans et -'},
+  {cle:'UFA_34',   groupe:'UFA',   classe:'g-ufa',   age:'34 ans et -'},
+  {cle:'UFA_35',   groupe:'UFA',   classe:'g-ufa',   age:'35 et +'},
+  {cle:'UFAR2_34', groupe:'UFAR2', classe:'g-ufar2', age:'34 ans et -'},
+  {cle:'UFAR2_35', groupe:'UFAR2', classe:'g-ufar2', age:'35 et +'},
+  {cle:'SANS_34',  groupe:'SANS',  classe:'g-sans',  age:'34 ans et -'},
+  {cle:'SANS_35',  groupe:'SANS',  classe:'g-sans',  age:'35 et +'}
+];
+function etiquetteOvCharte(i){
+  const ov = CHARTE_OV_MIN + i;
+  return ov === CHARTE_OV_MIN ? CHARTE_OV_MIN + '-' : ov === CHARTE_OV_MAX ? CHARTE_OV_MAX + '+' : String(ov);
+}
+function rangCharte(ovEff){
+  return Math.max(0, Math.min(CHARTE_OV_MAX - CHARTE_OV_MIN, ovEff - CHARTE_OV_MIN));
+}
+function fmtMilliers(v){ return v.toLocaleString('fr-CA').replace(/,/g,' ') + ' $'; }
+
+/* Verdict d'un contrat face à la charte. Retourne {code, libelle, ecart, minEff,
+   minPlein, detail} ou null si le joueur est inanalysable (backup, salaire nul).
+   - minEff : minimum de la charte à l'échelon effectif (rabais gardien OV −1
+     et bonus d'échelon RFA au-delà de 3 ans inclus);
+   - minPlein : même minimum sans le rabais gardien (échelon plein). */
+function verdictCharte(j, statut, duree){
+  if (!j || j.backup || !isFinite(j.salaire) || j.salaire <= 0) return null;
+  const minEff = salaireMinimum(j.ov, statut, j.age, duree, j.po);
+  const minPlein = salaireMinimum(j.ov, statut, j.age, duree, 'P');
+  if (minEff === null) return null;
+  const gardien = j.po === 'G';
+  if (j.salaire === minEff){
+    return {code:'charte', libelle:'Sur la charte', ecart:0, minEff, minPlein,
+            detail: gardien && minEff !== minPlein ? 'rabais gardien appliqué (échelon OV −1)' : ''};
+  }
+  if (gardien && j.salaire === minPlein){
+    return {code:'charte', libelle:'Sur la charte', ecart:0, minEff, minPlein,
+            detail:'échelon plein — le rabais gardien (OV −1) n\'a pas été utilisé'};
+  }
+  if (j.salaire > minEff){
+    return {code:'surpaye', libelle:'Surpayé', ecart:j.salaire - minEff, minEff, minPlein,
+            detail: gardien ? 'écart mesuré contre l\'échelon gardien (OV −1)' : ''};
+  }
+  return {code:'aubaine', libelle:'Aubaine salariale', ecart:minEff - j.salaire, minEff, minPlein,
+          detail: gardien ? 'écart mesuré contre l\'échelon gardien (OV −1)' : ''};
+}
+
+/* Tableau dynamique de la charte. surbrillance = {cle, rang} ou null. */
+function rendreCharteTableau(surbrillance){
+  const cadre = document.getElementById('csTableau');
+  if (!cadre) return;
+  const groupes = [
+    {classe:'g-rfa',   nom:'RFAs',                col:1, duree:'1 à 7 ans',      art:'CHARTE 6.4.1'},
+    {classe:'g-ufa',   nom:'UFAs',                col:2, duree:'1 à 4 ans',      art:'CHARTE 6.4.2'},
+    {classe:'g-ufar2', nom:'UFAs Ronde 2',        col:2, duree:'1 à 2 ans',      art:'CHARTE 6.4.3'},
+    {classe:'g-sans',  nom:'Joueurs sans contrat', col:2, duree:'1 an seulement', art:'CHARTE 6.4.4'}
+  ];
+  let h = '<table class="cs-tableau"><thead>';
+  h += '<tr><th class="cs-ov" rowspan="4">OV</th>' +
+       groupes.map(g=>`<th class="${g.classe}" colspan="${g.col}">${g.nom}</th>`).join('') + '</tr>';
+  h += '<tr>' + CS_COLONNES.map(c=>`<th class="${c.classe}">${c.age}</th>`).join('') + '</tr>';
+  h += '<tr>' + groupes.map(g=>`<th class="${g.classe}" colspan="${g.col}">${g.duree}</th>`).join('') + '</tr>';
+  h += '<tr>' + groupes.map(g=>`<th class="${g.classe}" colspan="${g.col}">${g.art}</th>`).join('') + '</tr>';
+  h += '</thead><tbody>';
+  for (let i = 0; i <= CHARTE_OV_MAX - CHARTE_OV_MIN; i++){
+    const rangActif = surbrillance && surbrillance.rang === i;
+    h += `<tr${rangActif ? ' class="cs-rang-actif"' : ''}><td class="cs-ov">${etiquetteOvCharte(i)}</td>`;
+    for (const c of CS_COLONNES){
+      const actif = rangActif && surbrillance.cle === c.cle;
+      h += `<td${actif ? ' class="cs-actif"' : ''}>${fmtMilliers(CHARTE_SALAIRE[c.cle][i])}</td>`;
+    }
+    h += '</tr>';
+  }
+  h += '</tbody></table>';
+  cadre.innerHTML = h;
+}
+
+function joueursCharte(){
+  return ETAT.roster.filter(j => !j.backup && isFinite(j.salaire) && j.salaire > 0);
+}
+function peuplerJoueursCharte(){
+  const sel = document.getElementById('csJoueur');
+  if (!sel) return;
+  const courant = sel.value;
+  const liste = joueursCharte();
+  sel.innerHTML = '<option value="">— choisir un joueur —</option>' +
+    liste.map(j => `<option value="${j.nom}">${j.nom} (${j.po} · OV ${j.ov} · ${fmtArgent(j.salaire)})</option>`).join('');
+  if (courant && liste.some(j => j.nom === courant)) sel.value = courant;
+}
+function peuplerDureeCharte(statut, valeur){
+  const sel = document.getElementById('csDuree');
+  if (!sel) return;
+  const max = dureeMaxCharte(statut);
+  const v = Math.max(1, Math.min(max, valeur || Number(sel.value) || 1));
+  sel.innerHTML = Array.from({length:max}, (_,i)=>`<option value="${i+1}">${i+1} an${i ? 's' : ''}</option>`).join('');
+  sel.value = String(v);
+}
+function chargerJoueurCharte(){
+  const nom = document.getElementById('csJoueur').value;
+  const j = ETAT.roster.find(x => x.nom === nom);
+  if (j){
+    const statut = statutResignature(j);
+    document.getElementById('csStatut').value = statut;
+    peuplerDureeCharte(statut, Math.max(1, Math.min(dureeMaxCharte(statut), j.ct || 1)));
+  }
+  calculerCharte();
+}
+function calculerCharte(){
+  const nom = document.getElementById('csJoueur').value;
+  const statut = document.getElementById('csStatut').value;
+  const duree = Number(document.getElementById('csDuree').value) || 1;
+  const j = ETAT.roster.find(x => x.nom === nom);
+  const fiche = document.getElementById('csFiche');
+  const badge = document.getElementById('csVerdict');
+  if (!j){
+    fiche.innerHTML = '';
+    badge.className = 'cs-verdict indef';
+    badge.textContent = 'Aucun joueur sélectionné';
+    rendreCharteTableau(null);
+    return;
+  }
+  const v = verdictCharte(j, statut, duree);
+  const ovEff = echelonEffectif(j.ov, statut, duree, j.po);
+  const cle = cleCharte(statut, j.age);
+  const champs = [
+    ['Position', j.po], ['Âge', j.age + ' ans'], ['OV', j.ov],
+    ['Échelon appliqué', etiquetteOvCharte(rangCharte(ovEff)) + (ovEff !== j.ov ? ' (OV ' + (ovEff > j.ov ? '+' : '') + (ovEff - j.ov) + ')' : '')],
+    ['Salaire actuel', fmtArgent(j.salaire)],
+    ['Salaire de la charte', v ? fmtArgent(v.minEff) : '—']
+  ];
+  if (v && v.code !== 'charte'){
+    champs.push(['Écart', (v.code === 'surpaye' ? '+' : '−') + fmtArgent(v.ecart)]);
+  }
+  fiche.innerHTML = champs.map(([l, x]) =>
+    `<div class="cs-champ"><span class="lib">${l}</span><span class="val">${x}</span></div>`).join('');
+  badge.className = 'cs-verdict ' + (v ? v.code : 'indef');
+  badge.textContent = v ? v.libelle + (v.detail ? ' — ' + v.detail : '') : 'Contrat inanalysable';
+  rendreCharteTableau({cle, rang: rangCharte(ovEff)});
+}
+function rendreApercuCharte(){
+  const cadre = document.getElementById('csApercu');
+  if (!cadre) return;
+  const lignes = joueursCharte().map(j => {
+    const statut = statutResignature(j);
+    const v = verdictCharte(j, statut, 1);
+    if (!v) return '';
+    const ecart = v.code === 'charte' ? '<td class="num dim">—</td>' :
+      `<td class="num">${v.code === 'surpaye' ? '+' : '−'}${fmtArgent(v.ecart)}</td>`;
+    return `<tr><td>${j.nom}</td><td>${j.po}</td><td class="num">${j.age}</td><td class="num">${j.ov}</td>` +
+      `<td>${statut}</td><td class="${j.ct > 0 ? 'num' : 'num dim'}">${j.ct > 0 ? j.ct + ' an' + (j.ct > 1 ? 's' : '') : 'échu'}</td>` +
+      `<td class="num">${fmtArgent(j.salaire)}</td><td class="num">${fmtArgent(v.minEff)}</td>` + ecart +
+      `<td><span class="mini ${v.code}">${v.libelle}</span></td></tr>`;
+  }).join('');
+  cadre.innerHTML = '<table class="cs-apercu"><thead><tr>' +
+    '<th>Joueur</th><th>PO</th><th class="num">Âge</th><th class="num">OV</th><th>Statut</th><th class="num">Contrat</th>' +
+    '<th class="num">Salaire</th><th class="num">Charte</th><th class="num">Écart</th><th>Verdict</th>' +
+    '</tr></thead><tbody>' + lignes + '</tbody></table>';
+}
+function rendreCharte(){
+  peuplerJoueursCharte();
+  peuplerDureeCharte(document.getElementById('csStatut').value);
+  calculerCharte();
+  rendreApercuCharte();
+}
+function construireCharte(){
+  const selJ = document.getElementById('csJoueur');
+  if (!selJ) return;
+  selJ.addEventListener('change', chargerJoueurCharte);
+  document.getElementById('csStatut').addEventListener('change', () => {
+    peuplerDureeCharte(document.getElementById('csStatut').value);
+    calculerCharte();
+  });
+  document.getElementById('csDuree').addEventListener('change', calculerCharte);
+  rendreCharte();
+}
+construireCharte();
+
 /* ---------- Navigation et initialisation ---------- */
 function toutRendre(){
   rendreAlignement();
   rendreProduction();
   rendreProgression();
+  rendreCharte();
 }
 document.querySelectorAll('nav button[data-vue]').forEach(b=>{
   b.addEventListener('click', ()=>{
@@ -2444,12 +3245,16 @@ document.querySelectorAll('nav button[data-vue]').forEach(b=>{
     b.classList.add('actif');
     document.getElementById('vue-'+b.dataset.vue).classList.add('actif');
     if (b.dataset.vue==='composition') rendreComposition();
+    if (b.dataset.vue==='trios') rendreTrios();
     if (b.dataset.vue==='progression') rendreProgression();
     if (b.dataset.vue==='ovdetail') peuplerJoueursOvd();
+    if (b.dataset.vue==='charte') rendreCharte();
     if (b.dataset.vue==='reglages') rendreMatrice();
   });
 });
 attacherFormulaireCompo();
+attacherTrios();
+rendreTrios();
 document.getElementById('progFiltres').addEventListener('click', e=>{
   const b = e.target.closest('button'); if (!b) return;
   document.querySelectorAll('#progFiltres button').forEach(x=>x.classList.remove('actif'));
@@ -2599,11 +3404,14 @@ if (typeof window !== 'undefined'){
     modA, convertirJet, fourchetteRecote, modsEstime, matchsEquipe, xtraEstArchive, productionDe, ETAT,
     extraireFiche, validerPageEquipe, CONFIG, CLES_LS, parseFinance,
     litCompo, ecritCompo, joueursComposition, rendreComposition,
+    litTrios, ecritTrios, validerAlignementTrios, rendreTrios, proposerTrios, TRIOS_VIDES,
     CHARTE_SALAIRE, salaireMinimum, statutResignature, cleCharte, dureeMaxCharte,
     fmtArgentCourt, parseArgent, litResignatures, ecritResignatures,
     ouvrirProlongation, fermerProlongation, calculerMasse, PLAFOND, echelonEffectif, peutProlonger,
     MATRICES, STATS_PAR_MATRICE, NIVEAUX, SECOURS_ROSTER, PROFILS, STATS_DEF,
-    ovDetaille, OV_POIDS, OV_ORDRE, peuplerJoueursOvd, calculerOvd};
+    ovDetaille, OV_POIDS, OV_ORDRE, peuplerJoueursOvd, calculerOvd,
+    CS_COLONNES, CHARTE_OV_MIN, CHARTE_OV_MAX, verdictCharte, rendreCharte,
+    peuplerJoueursCharte, calculerCharte, rendreApercuCharte, rangCharte, etiquetteOvCharte};
 }
 </script>
 </body>
