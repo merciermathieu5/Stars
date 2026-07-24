@@ -97,25 +97,25 @@ const ATTENDU = {
   egal(Object.keys(S.MATRICES).length, 15, '15 matrices de profils');
   const nbStats = Object.values(S.MATRICES).reduce((a,m)=>a+Object.keys(m).length,0);
   egal(nbStats, 40, '40 tableaux de seuils au total');
-  tableauEgal(S.seuilsMatrice('ELITE','pts',82), [97,86,74,63,37,-1], 'Elite points OV 82');
-  tableauEgal(S.seuilsMatrice('ELITE','pts',70), [23,20,17,15,9,-1], 'OV 70 ramené au rang 73');
-  tableauEgal(S.seuilsMatrice('ELITE','pts',95), [117,104,90,77,45,-1], 'OV 95 ramené au rang 90');
-  tableauEgal(S.seuilsMatrice('DELITEQB','ppg',80), [3,2,1,0,-1,-5], 'DElite QB buts en PP OV 80');
+  tableauEgal(S.seuilsMatrice('ELITE','pts',82), [91,81,70,60,35,-1], 'Elite points OV 82 (révision 2026)');
+  tableauEgal(S.seuilsMatrice('ELITE','pts',70), [24,21,18,16,9,-1], 'OV 70 ramené au rang 73');
+  tableauEgal(S.seuilsMatrice('ELITE','pts',95), [110,97,84,72,42,3], 'OV 95 ramené au rang 90');
+  tableauEgal(S.seuilsMatrice('DELITEQB','ppg',80), [2,1,0,-1,-2,-5], 'DElite QB buts en PP OV 80 (révision 2026)');
   tableauEgal(S.seuilsMatrice('STARTER','ming',85), [0.98,0.91,0.84,0.77,0.64,-1], 'Starter MIN (ratio) constant');
-  tableauEgal(S.seuilsMatrice('BACKUP','psv',78), [908,899,890,881,872,-1], 'Backup Psv OV 78');
-  tableauEgal(S.seuilsMatrice('GRINDER','hits20',77), [2.55,2.35,2.15,1.95,1.75,-1], 'Grinder MEÉ/20 OV 77');
+  tableauEgal(S.seuilsMatrice('BACKUP','psv',78), [916,907,898,889,880,-1], 'Backup Psv OV 78 (révision 2026)');
+  tableauEgal(S.seuilsMatrice('GRINDER','hits20',77), [2.33,2.13,1.93,1.73,1.53,-1], 'Grinder MEÉ/20 OV 77 (révision 2026)');
   egal(S.seuilsMatrice('ELITE','inexistante',80), null, 'Statistique inconnue → null');
 
   console.log('— Statuts (tableau 18) : un degré exige de DÉPASSER STRICTEMENT son seuil');
-  const sE82 = S.seuilsMatrice('ELITE','pts',82); // [97,86,74,63,37,-1]
-  egal(S.statutSelonSeuils(97.5, sE82), 'memorable', '97,5 pts > 97 → Mémorable');
-  egal(S.statutSelonSeuils(97,   sE82), 'excellente', '97 pts = seuil Mémorable → Excellente (pas de Mémorable sans dépasser)');
-  egal(S.statutSelonSeuils(87,   sE82), 'excellente', '87 pts → Excellente');
-  egal(S.statutSelonSeuils(75,   sE82), 'satisfaisante', '75 pts → Satisfaisante');
-  egal(S.statutSelonSeuils(74,   sE82), 'correcte', '74 pts = seuil Satisfaisante → Correcte');
-  egal(S.statutSelonSeuils(64,   sE82), 'correcte', '64 pts → Correcte');
-  egal(S.statutSelonSeuils(38,   sE82), 'decevante', '38 pts → Décevante');
-  egal(S.statutSelonSeuils(37,   sE82), 'oublier', '37 pts = seuil Décevante → À oublier');
+  const sE82 = S.seuilsMatrice('ELITE','pts',82); // [91,81,70,60,35,-1]
+  egal(S.statutSelonSeuils(91.5, sE82), 'memorable', '91,5 pts > 91 → Mémorable');
+  egal(S.statutSelonSeuils(91,   sE82), 'excellente', '91 pts = seuil Mémorable → Excellente (pas de Mémorable sans dépasser)');
+  egal(S.statutSelonSeuils(82,   sE82), 'excellente', '82 pts > 81 → Excellente');
+  egal(S.statutSelonSeuils(71,   sE82), 'satisfaisante', '71 pts → Satisfaisante');
+  egal(S.statutSelonSeuils(70,   sE82), 'correcte', '70 pts = seuil Satisfaisante → Correcte');
+  egal(S.statutSelonSeuils(61,   sE82), 'correcte', '61 pts → Correcte');
+  egal(S.statutSelonSeuils(36,   sE82), 'decevante', '36 pts → Décevante');
+  egal(S.statutSelonSeuils(35,   sE82), 'oublier', '35 pts = seuil Décevante → À oublier');
   egal(S.statutSelonSeuils(null, sE82), 'indef', 'Valeur absente → à définir');
   egal(S.statutSelonSeuils(50, [60,null,null,null,null,null]), 'sousmemo', 'Seule cible Mémorable connue, non dépassée → sous le Mémorable');
 
@@ -127,8 +127,10 @@ const ATTENDU = {
   ev = S.evaluerStat('pts', 40, sE82);
   egal(ev.statut, 'decevante', '40 pts → Décevante');
   egal(ev.mods, -20, 'ModS -20 pour une Décevante');
+  ev = S.evaluerStat('shotpct', 15.7, S.seuilsMatrice('ELITE','shotpct',82));
+  egal(ev.statut, 'excellente', 'PCTG 15,7 sur seuils OV 82 → Excellente (seuil E = 15,62875, révision 2026)');
   ev = S.evaluerStat('shotpct', 15.2, S.seuilsMatrice('ELITE','shotpct',82));
-  egal(ev.statut, 'excellente', 'PCTG 15,2 sur seuils OV 82 → Excellente');
+  egal(ev.statut, 'satisfaisante', 'PCTG 15,2 sur seuils OV 82 → Satisfaisante (sous le seuil E fin)');
   ev = S.evaluerStat('pts', null, sE82);
   egal(ev.statut, 'indef', 'Sans valeur → à définir');
 
@@ -230,7 +232,7 @@ const ATTENDU = {
   const jk = joueurDe('Jesperi Kotkaniemi');
   jk._profil = S.determinerProfil(jk);
   let s = S.seuilsPour(jk, 'pts', {}, {});
-  tableauEgal(s.seuils, [97,86,74,63,37,-1], 'Seuils Y17 par défaut (OV 82)');
+  tableauEgal(s.seuils, [91,81,70,60,35,-1], 'Seuils par défaut (OV 82, révision 2026)');
   egal(s.source, 'Y17', 'Source = Y17');
   const perso = {ELITE: {pts: {82: [100,90,80,70,40,-1]}}};
   s = S.seuilsPour(jk, 'pts', perso, {});
@@ -238,7 +240,7 @@ const ATTENDU = {
   egal(s.source, 'personnalisée', 'Source = personnalisée');
   s = S.seuilsPour(jk, 'pts', {}, {[S.normaliserNom(jk.nom)]: {pts: 120}});
   egal(s.seuils[0], 120, 'La surcharge fixe le seuil Mémorable');
-  egal(s.seuils[2], 74, 'Les autres degrés restent ceux de la matrice');
+  egal(s.seuils[2], 70, 'Les autres degrés restent ceux de la matrice (révision 2026)');
 
   console.log('— Parseur de formation (fixture HTML réaliste)');
   const fixtureRoster = `<html><body><table>
